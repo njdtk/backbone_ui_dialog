@@ -4,22 +4,35 @@
 			.extend({
 
 				options : {
-
+					/**
+					 * 创建标签名称
+					 */
 					tagName : 'div',
-
+					/**
+					 * 用户自定义的对话框内容的div层id号
+					 */
 					dialog_content_id : null,
-
+					/**
+					 * 对话框标题
+					 */
 					title : '',
-
+					/**
+					 * 对话框显示的按钮集
+					 */
 					buttons : [],
-
-					width : "360",
-
+					/**
+					 * 对话框的宽度、高度（不带单位）
+					 */
+					width : "",
 					height : "",
-
+					/**
+					 * 是否可关闭
+					 */
 					closable : true,
-
-					closed : false
+					/**
+					 * 是否显示背景蒙板
+					 */
+					modal : true
 
 				},
 
@@ -37,19 +50,18 @@
 					});
 					$(this.el).addClass('cs2c_dialog');
 
-					var dialog_div = $('#' + this.options.dialog_content_id)
-							.parent()[0];
-					// 确认是否已经生成cs2c_dialog对话框
-					if (dialog_div.className !== "cs2c_dialog") {
-						this.createHeader();
-						this.insertContentDiv();
-						this.createModalLayer();
-						this.createBottomButtons();
-						document.body.appendChild(this.el);
-					} else {
-						// 需要的对话框已经生成，则直接显示即可
-						this.openDialog();
-					}
+					// 在用户创建对话框内容位置创建对话框
+					$('#' + this.options.dialog_content_id).parent().append(
+							this.el);
+
+					// 创建对话框内容
+					this.createHeader();
+					this.insertContentDiv();
+					this.createInnerMask();
+					this.createDialogShadow();
+					this.createBottomButtons();
+
+					this.isShadowMask(this.options.modal);
 
 					_.bindAll("render");
 
@@ -58,7 +70,7 @@
 				render : function() {
 
 					var thisEl = $(this.el)[0];
-					thisEl.style.zIndex = "9999";
+					thisEl.style.zIndex = "9996";
 					thisEl.style.display = "block";
 					thisEl.style.position = "fixed";
 					thisEl.style.top = ($(document).height() - Number(this.options.height))
@@ -68,6 +80,9 @@
 					thisEl.style.width = this.options.width + "px";
 					thisEl.style.minHeight = (65 + Number(this.options.height))
 							+ "px";
+
+					(document.all) ? $(this.el).siblings('.cs2c_dialog_shadow')
+							.css('filter', 'alpha(opacity=30)') : '';
 
 					return this;
 
@@ -80,17 +95,12 @@
 				 */
 				createHeader : function() {
 
-					var header = $('.cs2c_dialog_header')[0];
-					if (header == null || header == "undefined") {
-						header = document.createElement("div");
-						header.className = "cs2c_dialog_header";
-						$(this.el).append(header);
-					} else {
-						header.style.display = "block";
-					}
+					// 创建标题栏
+					$(this.el).append('<div class="cs2c_dialog_header"></div>');
 
 					// 将用户自定义的对话框标题写入新建对话框
-					$(header).html(this.options.title);
+					$(this.el).find('.cs2c_dialog_header').html(
+							this.options.title);
 
 					// 标题处工具栏
 					var closedButton = document.createElement("a");
@@ -98,7 +108,7 @@
 					closedButton.style.marginLeft = (Number(this.options.width) - 110)
 							+ "px";
 
-					$(header).append(closedButton);
+					$(this.el).find('.cs2c_dialog_header').append(closedButton);
 					$(closedButton).html("关闭");
 
 				},
@@ -110,20 +120,63 @@
 				 */
 				insertContentDiv : function() {
 
+					// 创建对话框的内容显示区域
 					var dialog_body = document.createElement("div");
 					dialog_body.className = "cs2c_dialog_body";
+					dialog_body.style.position = "relative";
 					dialog_body.style.backgroundColor = "#fff";
 					dialog_body.style.minHeight = this.options.height + "px";
 					$(this.el).append(dialog_body);
 
-					var userDivClassName = "#" + this.options.dialog_content_id;
-					var dialog_content = $(userDivClassName)[0];
+					$(dialog_body).append(
+							$("#" + this.options.dialog_content_id));
 
-					if (dialog_content.parentNode.localName == "body") {
-						$(dialog_body).append(dialog_content);
+				},
 
+				/**
+				 * 创建对话框内部的遮罩
+				 * 
+				 * @author qianqian.yang 2012-11-1
+				 */
+				createInnerMask : function() {
+					$(this.el).find('.cs2c_dialog_body').append(
+							'<div class="dialog-mask"></div>');
+					$(this.el).find('.cs2c_dialog_body').append(
+							'<div class="dialog-mask-msg">正在处理，请稍侯...</div>');
+				},
+
+				/**
+				 * 是否显示对话框中的蒙板
+				 * 
+				 * @author qianqian.yang 2012-11-1
+				 * @param flag
+				 */
+				isInnerMask : function(flag) {
+					if (flag) {
+						// 遮罩等待字样居中显示
+						var dialog_body = $(this.el).find('.cs2c_dialog_body');
+						var mask = $(this.el).find('.dialog-mask');
+
+						mask.css({
+							height : dialog_body.height(),
+							width : dialog_body.width(),
+							zIndex : "9997"
+						});
+						mask.show();
+
+						var msg = $(this.el).find('.dialog-mask-msg');
+						msg
+								.css({
+									left : (dialog_body.width() - msg
+											.outerWidth()) / 2,
+									top : (dialog_body.height() - msg
+											.outerHeight()) / 2,
+									zIndex : "9998"
+								});
+						msg.show();
 					} else {
-						dialog_content.style.display = "block";
+						$(this.el).find('.dialog-mask').hide();
+						$(this.el).find('.dialog-mask-msg').hide();
 					}
 
 				},
@@ -133,45 +186,49 @@
 				 * 
 				 * @author qianqian.yang 2012-10-19
 				 */
-				createModalLayer : function() {
-					// 弹出层背景遮罩
-					var layer = $('.cs2c_dialog_layer')[0];
-					if (layer == null || layer == "undefined") {
-						layer = document.createElement("div");
-						layer.className = "cs2c_dialog_layer";
-
-						document.body.appendChild(layer);
-						// layer.style.display = "none";
-					} else {
-						layer.style.display = "block";
-					}
-					layer.style.width = layer.style.height = "100%";
-					layer.style.position = !this.isIE6 ? "fixed" : "absolute";
-					layer.style.top = layer.style.left = 0;
-					layer.style.backgroundColor = "#000";
-					layer.style.zIndex = "9998";
-					layer.style.opacity = "0.3";
+				createDialogShadow : function() {
+					$(this.el).after('<div class="cs2c_dialog_shadow"></div>');
 				},
 
 				/**
-				 * 打开隐藏的对话框
+				 * 是否显示对话框的背景遮罩蒙板
+				 * 
+				 * @author qianqian.yang 2012-11-1
+				 * @param flag
+				 */
+				isShadowMask : function(flag) {
+					var outterMask = $(this.el).siblings('.cs2c_dialog_shadow');
+					if (flag) {
+						outterMask.show();
+					} else {
+						outterMask.hide();
+					}
+				},
+
+				/**
+				 * 控制对话框的开关状态
+				 * 
+				 * @author qianqian.yang 2012-11-1
+				 * @param flag
+				 *            true 打开对话框 flase 关闭对话框
+				 */
+				isOpenDialog : function(flag) {
+					if (flag) {
+						$(this.el).show();
+						$(this.el).siblings('.cs2c_dialog_shadow').show();
+					} else {
+						$(this.el).hide();
+						$(this.el).siblings('.cs2c_dialog_shadow').hide();
+					}
+				},
+
+				/**
+				 * 关闭对话框
 				 * 
 				 * @author qianqian.yang 2012-10-29
 				 */
-				openDialog : function() {
-					var uwindow = $(this.el)[0];// 关闭弹出层
-					uwindow.style.display = "block";
-					var grayLayer = $('.cs2c_dialog_layer')[0];// 关闭遮罩层
-					grayLayer.style.display = "block";
-
-				},
-
 				closeDialog : function() {
-					var uwindow = $(this.el)[0];// 关闭弹出层
-					uwindow.style.display = "none";
-					var grayLayer = $('.cs2c_dialog_layer')[0];// 关闭遮罩层
-					grayLayer.style.display = "none";
-
+					this.isOpenDialog(false);
 				},
 
 				/**
@@ -190,11 +247,15 @@
 
 					for ( var i = 0; i < this.options.buttons.length; i++) {
 						var btn = document.createElement("a");
-						btn.className = this.options.buttons[i];
+						btn.className = "l-btn " + this.options.buttons[i].id;
 						btn.href = "#";
-						btn.textContent = this.options.buttons[i];
+						// btn.textContent = this.options.buttons[i].text;
 
 						$(dialog_btn).append(btn);
+						$(btn).append(
+								'<span class="dialog-btn-left">'
+										+ this.options.buttons[i].text
+										+ '</span>');
 					}
 
 				},
@@ -206,28 +267,44 @@
 				 * @param e
 				 */
 				buttonAction : function(e) {
-					var button = e.currentTarget;
-					switch (button.className) {
+					var button = e.currentTarget.className.split(" ")[1];
+					switch (button) {
 					case "ok":
-						alert("ok");
+						this.okPressed();
 						break;
-
 					case "cancel":
-						this.closeDialog();
+						this.cancelPressed();
 						break;
-
 					default:
+						this.otherPressed();
 						break;
 					}
 				},
 
-				isIE6 : function() {
-					var isIE = (document.all) ? true : false;
-					var isIE6 = isIE
-							&& ([ /MSIE (\d)\.0/i.exec(navigator.userAgent) ][0][1] == 6);
+				/**
+				 * 用户点击确定按钮执行动作
+				 * 
+				 * @author qianqian.yang 2012-11-1
+				 */
+				okPressed : function() {
+					alert("ok");
+				},
 
-					return isIE6;
+				/**
+				 * 用户点击取消按钮执行动作
+				 * 
+				 * @author qianqian.yang 2012-11-1
+				 */
+				cancelPressed : function() {
+					this.isOpenDialog(false);
+				},
 
+				/**
+				 * 用户点击其他按钮执行动作，用户自定义可以重写
+				 * 
+				 * @author qianqian.yang 2012-11-1
+				 */
+				otherPressed : function() {
 				}
 
 			});
@@ -239,13 +316,19 @@ window.onload = function() {
 	var dialog = new CS2C_Dialog({
 		dialog_content_id : "b-dialog",
 		title : "新建对话框",
-		buttons : [ 'ok', 'cancel' ],
+		buttons : [ {
+			id : 'ok',
+			text : '确定'
+		}, {
+			id : 'cancel',
+			text : '取消'
+		} ],
 		width : "400",
-		height : "50"
+		height : "150"
 	}).render();
 
 	$('#test').click(function() {
-		dialog.openDialog();
+		dialog.isOpenDialog(true);
 	});
 	$('#ptest').hide();
 	$('#show').click(function() {
@@ -253,6 +336,10 @@ window.onload = function() {
 		// var height = $('#b-dialog')[0];
 		// dialog.options.height = "100px";
 		// dialog.render();
+	});
+
+	$('#showmask').click(function() {
+		dialog.isInnerMask(true);
 	});
 
 };

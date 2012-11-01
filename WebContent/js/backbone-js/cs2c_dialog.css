@@ -31,3 +31,57 @@
 .cs2c_dialog_button a{
  	 color:#15428B;
 }
+
+.cs2c_dialog_shadow{
+	position:absolute;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	background:#000;
+	opacity:0.3;
+	filter:alpha(opacity=30);
+	display:none;
+	z-index: 9995;
+}
+
+.dialog-mask{
+	position:absolute;
+	left:0;
+	top:0;
+	background:#ccc;
+	opacity:0.3;
+	filter:alpha(opacity=30);
+	display:none;
+}
+.dialog-mask-msg{
+	position:absolute;
+	cursor1:wait;
+	width:auto;
+	height:16px;
+	padding:12px 5px 10px 30px;
+	background:#fff url('images/pagination_loading.gif') no-repeat scroll 5px 10px;
+	border:2px solid #6593CF;
+	color:#222;
+	display:none;
+}
+
+a span.dialog-btn-left{
+	background: url("images/button_span_bg.gif") no-repeat scroll left top transparent;
+    display: inline-block;
+    height: 16px;
+    line-height: 16px;
+    padding: 4px 0 4px 18px;
+}
+
+a.l-btn {
+    background: url("images/button_a_bg.gif") no-repeat scroll right top transparent;
+    color: #444444;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 12px;
+    height: 24px;
+    outline: medium none;
+    padding-right: 18px;
+    text-decoration: none;
+}
