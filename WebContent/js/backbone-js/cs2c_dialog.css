@@ -1,0 +1,33 @@
+@CHARSET "UTF-8";
+
+.cs2c_dialog{
+	-moz-border-radius: 5px 5px 5px 5px;
+	background: url("images/panel_title.png") repeat scroll 0 0 transparent;
+	border: 1px solid #99BBE8;
+	font-size: 12px;
+	overflow: hidden;
+	padding: 5px;
+	position: absolute;
+}
+.cs2c_dialog_header{
+ font-weight: bold;
+ padding-left:10px;
+ color: #15428B;
+ line-height:25px;
+}
+.cs2c_dialog_header a{
+ text-decoration:none;
+ color:#15428B;
+ text-align: right;
+}
+
+.cs2c_dialog_button{
+ 	background: none repeat scroll 0 0 #FAFAFA;
+    border-top: 1px solid #EEEEEE;
+    padding: 5px;
+    text-align: right;
+}
+
+.cs2c_dialog_button a{
+ 	 color:#15428B;
+}
