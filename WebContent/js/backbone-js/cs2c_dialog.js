@@ -113,7 +113,7 @@
 					var dialog_body = document.createElement("div");
 					dialog_body.className = "cs2c_dialog_body";
 					dialog_body.style.backgroundColor = "#fff";
-					dialog_body.style.height = this.options.height + "px";
+					dialog_body.style.minHeight = this.options.height + "px";
 					$(this.el).append(dialog_body);
 
 					var userDivClassName = "#" + this.options.dialog_content_id;
