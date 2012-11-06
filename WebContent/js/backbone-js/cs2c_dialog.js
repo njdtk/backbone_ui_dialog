@@ -1,8 +1,102 @@
 (function() {
 	/**
-	 * 对话框的显示层次
+	 * 层次显示的全局变量的大小，用于对话框和遮罩层次的确定
 	 */
 	window.zIndex = 9000;
+
+	/**
+	 * cs2c遮罩显示
+	 * 
+	 * @author qianqian.yang 2012-10-19
+	 */
+	window.CS2C_Shadow = Backbone.View.extend({
+		options : {
+			/**
+			 * 创建遮罩的位置
+			 */
+			position_id : '',
+			/**
+			 * 是否是全局遮罩，默认为是
+			 */
+			isAllMask : true,
+			/**
+			 * 如果不是全局遮罩，局部遮罩父节点的id
+			 */
+			parentEl_id : ''
+		},
+
+		initialize : function() {
+
+			// 随着浏览器窗体大小的改变渲染，包括样式和位置
+			var thisEl = this;
+			$(window).resize(function() {
+				thisEl.calMask();
+			});
+
+			$(this.el).addClass('dialog-mask');
+			// 在用户创建对话框内容位置创建对话框
+			$('#' + this.options.position_id).after(this.el);
+		},
+
+		render : function() {
+			$(this.el).after('<div class="dialog-mask-msg">正在处理，请稍侯...</div>');
+			return this;
+		},
+
+		/**
+		 * 计算遮罩的大小和位置
+		 * 
+		 * @author qianqian.yang 2012-11-6
+		 */
+		calMask : function() {
+			// 遮罩等待字样居中显示
+			var parent = this.options.isAllMask ? $(window) : $('#'
+					+ parentEl_id);
+			var mask = $(this.el);
+			var msg = $(this.el).next();
+			mask.css({
+				height : parent.height(),
+				width : parent.width()
+			});
+			msg.css({
+				left : (parent.width() - msg.outerWidth()) / 2,
+				top : (parent.height() - msg.outerHeight()) / 2
+			});
+		},
+
+		/**
+		 * 是否显示对话框中的蒙板
+		 * 
+		 * @author qianqian.yang 2012-11-1
+		 * @param flag
+		 *            是否显示遮罩
+		 */
+
+		isMask : function(flag) {
+			var parent = this.options.isAllMask ? $(document) : $('#'
+					+ parentEl_id);
+			var mask = $(this.el);
+			var msg = $(this.el).next();
+			mask.css({
+				height : parent.height(),
+				width : parent.width(),
+				zIndex : zIndex++
+			});
+			msg.css({
+				left : (parent.width() - msg.outerWidth()) / 2,
+				top : (parent.height() - msg.outerHeight()) / 2,
+				zIndex : zIndex++
+			});
+			if (flag) {
+				mask.show();
+				msg.show();
+			} else {
+				mask.hide();
+				msg.hide();
+			}
+		}
+
+	});
 
 	/**
 	 * cs2c对话框类
@@ -340,52 +434,58 @@
 
 window.onload = function() {
 
-	var dialog = new CS2C_Dialog({
-		dialog_content_id : "b-dialog",
-		title : "新建对话框",
-		buttons : [ {
-			id : 'ok',
-			text : '确定'
-		}, {
-			id : 'cancel',
-			text : '取消'
-		} ],
-		width : "400",
-		height : "150",
-		closable : true
+	var mask = new CS2C_Shadow({
+		position_id : "b-dialog",
 	}).render();
 
-	var dialog2 = new CS2C_Dialog({
-		dialog_content_id : "dialog2",
-		title : "另外一个弹出的对话框",
-		buttons : [ {
-			id : 'ok',
-			text : '确定'
-		}, {
-			id : 'cancel',
-			text : '取消'
-		} ],
-		width : "200",
-		height : "120",
-		closable : true,
-		modal : false
-	}).render();
+	mask.isMask(true);
 
-	$('#test').click(function() {
-		dialog.openDialog();
-	});
-	$('#ptest').hide();
-	$('#show').click(function() {
-		// $('#ptest').slideToggle("slow");
-		dialog2.openDialog();
-	});
-
-	$('#showmask').click(function() {
-		dialog.isInnerMask(true);
-	});
-
-	$('#show2').click(function() {
-		dialog2.isInnerMask(true);
-	});
+	// var dialog = new CS2C_Dialog({
+	// dialog_content_id : "b-dialog",
+	// title : "新建对话框",
+	// buttons : [ {
+	// id : 'ok',
+	// text : '确定'
+	// }, {
+	// id : 'cancel',
+	// text : '取消'
+	// } ],
+	// width : "400",
+	// height : "150",
+	// closable : true
+	// }).render();
+	//
+	// var dialog2 = new CS2C_Dialog({
+	// dialog_content_id : "dialog2",
+	// title : "另外一个弹出的对话框",
+	// buttons : [ {
+	// id : 'ok',
+	// text : '确定'
+	// }, {
+	// id : 'cancel',
+	// text : '取消'
+	// } ],
+	// width : "200",
+	// height : "120",
+	// closable : true,
+	// modal : false
+	// }).render();
+	//
+	// $('#test').click(function() {
+	// dialog.openDialog();
+	// });
+	// $('#ptest').hide();
+	// $('#show').click(function() {
+	// // $('#ptest').slideToggle("slow");
+	// dialog2.openDialog();
+	// });
+	//
+	// $('#showmask').click(function() {
+	// dialog.isInnerMask(true);
+	// });
+	//
+	// $('#show2').click(function() {
+	// dialog2.isInnerMask(true);
+	// });
 
 };
