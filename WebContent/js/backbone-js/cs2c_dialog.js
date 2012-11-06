@@ -1,5 +1,14 @@
 (function() {
+	/**
+	 * 对话框的显示层次
+	 */
+	window.zIndex = 9000;
 
+	/**
+	 * cs2c对话框类
+	 * 
+	 * @author qianqian.yang 2012-10-19
+	 */
 	window.CS2C_Dialog = Backbone.View
 			.extend({
 
@@ -70,7 +79,7 @@
 				render : function() {
 
 					var thisEl = $(this.el)[0];
-					thisEl.style.zIndex = "9996";
+					thisEl.style.zIndex = zIndex++;
 					thisEl.style.display = "block";
 					thisEl.style.position = "fixed";
 					thisEl.style.top = ($(document).height() - Number(this.options.height))
@@ -102,14 +111,14 @@
 					$(this.el).find('.cs2c_dialog_header').html(
 							this.options.title);
 
-					// 标题处工具栏
-					var closedButton = document.createElement("a");
-					closedButton.className = "cs2c_dialog_close_btn";
-					closedButton.style.marginLeft = (Number(this.options.width) - 110)
-							+ "px";
-
-					$(this.el).find('.cs2c_dialog_header').append(closedButton);
-					$(closedButton).html("关闭");
+					if (this.options.closable) {
+						// 标题处工具栏
+						var closedButton = document.createElement("a");
+						closedButton.className = "cs2c_dialog_close_btn";
+						$(this.el).find('.cs2c_dialog_header').append(
+								closedButton);
+						$(closedButton).html("关闭");
+					}
 
 				},
 
@@ -160,7 +169,7 @@
 						mask.css({
 							height : dialog_body.height(),
 							width : dialog_body.width(),
-							zIndex : "9997"
+							zIndex : zIndex++
 						});
 						mask.show();
 
@@ -171,7 +180,7 @@
 											.outerWidth()) / 2,
 									top : (dialog_body.height() - msg
 											.outerHeight()) / 2,
-									zIndex : "9998"
+									zIndex : zIndex++
 								});
 						msg.show();
 					} else {
@@ -187,7 +196,9 @@
 				 * @author qianqian.yang 2012-10-19
 				 */
 				createDialogShadow : function() {
-					$(this.el).after('<div class="cs2c_dialog_shadow"></div>');
+					$(this.el).after(
+							'<div class="cs2c_dialog_shadow" style="z-index:'
+									+ (zIndex++) + '"></div>');
 				},
 
 				/**
@@ -197,11 +208,23 @@
 				 * @param flag
 				 */
 				isShadowMask : function(flag) {
-					var outterMask = $(this.el).siblings('.cs2c_dialog_shadow');
+					var outterMasks = $(this.el)
+							.siblings('.cs2c_dialog_shadow');
+					if (outterMasks.length > 1) {
+						var id = '#' + this.options.dialog_content_id;
+						_.each(outterMasks,
+								function(outterMask) {
+									var length = $(outterMask.previousSibling)
+											.find(id).length;
+									if (length !== 0) {
+										outterMasks = $(outterMask);
+									}
+								});
+					}
 					if (flag) {
-						outterMask.show();
+						outterMasks.show();
 					} else {
-						outterMask.hide();
+						outterMasks.hide();
 					}
 				},
 
@@ -215,11 +238,14 @@
 				isOpenDialog : function(flag) {
 					if (flag) {
 						$(this.el).show();
-						$(this.el).siblings('.cs2c_dialog_shadow').show();
 					} else {
 						$(this.el).hide();
-						$(this.el).siblings('.cs2c_dialog_shadow').hide();
 					}
+				},
+
+				openDialog : function() {
+					this.isOpenDialog(true);
+					this.isShadowMask(this.options.modal);
 				},
 
 				/**
@@ -229,6 +255,7 @@
 				 */
 				closeDialog : function() {
 					this.isOpenDialog(false);
+					this.isShadowMask(false);
 				},
 
 				/**
@@ -296,7 +323,7 @@
 				 * @author qianqian.yang 2012-11-1
 				 */
 				cancelPressed : function() {
-					this.isOpenDialog(false);
+					this.closeDialog();
 				},
 
 				/**
@@ -324,22 +351,41 @@ window.onload = function() {
 			text : '取消'
 		} ],
 		width : "400",
-		height : "150"
+		height : "150",
+		closable : true
+	}).render();
+
+	var dialog2 = new CS2C_Dialog({
+		dialog_content_id : "dialog2",
+		title : "另外一个弹出的对话框",
+		buttons : [ {
+			id : 'ok',
+			text : '确定'
+		}, {
+			id : 'cancel',
+			text : '取消'
+		} ],
+		width : "200",
+		height : "120",
+		closable : true,
+		modal : false
 	}).render();
 
 	$('#test').click(function() {
-		dialog.isOpenDialog(true);
+		dialog.openDialog();
 	});
 	$('#ptest').hide();
 	$('#show').click(function() {
-		$('#ptest').slideToggle("slow");
-		// var height = $('#b-dialog')[0];
-		// dialog.options.height = "100px";
-		// dialog.render();
+		// $('#ptest').slideToggle("slow");
+		dialog2.openDialog();
 	});
 
 	$('#showmask').click(function() {
 		dialog.isInnerMask(true);
+	});
+
+	$('#show2').click(function() {
+		dialog2.isInnerMask(true);
 	});
 
 };
