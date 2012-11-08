@@ -337,6 +337,11 @@
 					}
 				},
 
+				/**
+				 * 打开对话框
+				 * 
+				 * @author qianqian.yang 2012-10-29
+				 */
 				openDialog : function() {
 					this.isOpenDialog(true);
 					this.isShadowMask(this.options.modal);
@@ -437,55 +442,54 @@ window.onload = function() {
 	var mask = new CS2C_Shadow({
 		position_id : "b-dialog",
 	}).render();
+	// mask.isMask(true);
 
-	mask.isMask(true);
+	var dialog = new CS2C_Dialog({
+		dialog_content_id : "b-dialog",
+		title : "新建对话框",
+		buttons : [ {
+			id : 'ok',
+			text : '确定'
+		}, {
+			id : 'cancel',
+			text : '取消'
+		} ],
+		width : "400",
+		height : "150",
+		closable : true
+	}).render();
 
-	// var dialog = new CS2C_Dialog({
-	// dialog_content_id : "b-dialog",
-	// title : "新建对话框",
-	// buttons : [ {
-	// id : 'ok',
-	// text : '确定'
-	// }, {
-	// id : 'cancel',
-	// text : '取消'
-	// } ],
-	// width : "400",
-	// height : "150",
-	// closable : true
-	// }).render();
-	//
-	// var dialog2 = new CS2C_Dialog({
-	// dialog_content_id : "dialog2",
-	// title : "另外一个弹出的对话框",
-	// buttons : [ {
-	// id : 'ok',
-	// text : '确定'
-	// }, {
-	// id : 'cancel',
-	// text : '取消'
-	// } ],
-	// width : "200",
-	// height : "120",
-	// closable : true,
-	// modal : false
-	// }).render();
-	//
-	// $('#test').click(function() {
-	// dialog.openDialog();
-	// });
-	// $('#ptest').hide();
-	// $('#show').click(function() {
-	// // $('#ptest').slideToggle("slow");
-	// dialog2.openDialog();
-	// });
-	//
-	// $('#showmask').click(function() {
-	// dialog.isInnerMask(true);
-	// });
-	//
-	// $('#show2').click(function() {
-	// dialog2.isInnerMask(true);
-	// });
+	var dialog2 = new CS2C_Dialog({
+		dialog_content_id : "dialog2",
+		title : "另外一个弹出的对话框",
+		buttons : [ {
+			id : 'ok',
+			text : '确定'
+		}, {
+			id : 'cancel',
+			text : '取消'
+		} ],
+		width : "200",
+		height : "120",
+		closable : true,
+		modal : false
+	}).render();
+
+	$('#test').click(function() {
+		dialog.openDialog();
+	});
+	$('#ptest').hide();
+	$('#show').click(function() {
+		// $('#ptest').slideToggle("slow");
+		dialog2.openDialog();
+	});
+
+	$('#showmask').click(function() {
+		dialog.isInnerMask(true);
+	});
+
+	$('#show2').click(function() {
+		dialog2.isInnerMask(true);
+	});
 
 };
