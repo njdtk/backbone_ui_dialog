@@ -140,6 +140,8 @@
 				},
 
 				events : {
+					"mousemove .cs2c_dialog_header" : "mouseMoveDone",
+					"mousedown .cs2c_dialog_header" : "mouseDownDone",
 					"click .cs2c_dialog_close_btn" : "closeDialog",
 					"click .cs2c_dialog_button a" : "buttonAction"
 				},
@@ -150,6 +152,9 @@
 					var thisEl = this;
 					$(window).resize(function() {
 						thisEl.render();
+					});
+					$(this.el).resize(function() {
+						alert("");
 					});
 					$(this.el).addClass('cs2c_dialog');
 
@@ -163,10 +168,8 @@
 					this.createInnerMask();
 					this.createDialogShadow();
 					this.createBottomButtons();
-
 					this.isShadowMask(this.options.modal);
-
-					_.bindAll("render");
+					this.closeDialog();
 
 				},
 
@@ -174,7 +177,7 @@
 
 					var thisEl = $(this.el)[0];
 					thisEl.style.zIndex = zIndex++;
-					thisEl.style.display = "block";
+					// thisEl.style.display = "block";
 					thisEl.style.position = "fixed";
 					thisEl.style.top = ($(document).height() - Number(this.options.height))
 							/ 2 + "px";
@@ -189,6 +192,45 @@
 
 					return this;
 
+				},
+
+				/**
+				 * 变换鼠标显示状态
+				 * 
+				 * @author qianqian.yang 2012-12-5
+				 * @param e
+				 */
+				mouseMoveDone : function(e) {
+					var header = e.currentTarget;
+					header.style.cursor = "move";
+				},
+
+				mouseDownDone : function(e) {
+					e = e || event;
+					var moveObj = $(e.currentTarget).parent();
+					var moveObjOffset = moveObj.offset();
+
+					// x=鼠标相对于网页的x坐标-网页被卷去的宽-待移动对象的左外边距
+					var x = e.clientX - document.body.scrollLeft
+							- moveObjOffset.left;
+					// y=鼠标相对于网页的y左边-网页被卷去的高-待移动对象的左上边距
+					var y = e.clientY - document.body.scrollTop
+							- moveObjOffset.top;
+
+					document.onmousemove = function(e) {// 鼠标移动
+						if (!e) {
+							e = window.event; // 移动时创建一个事件
+						}
+						moveObj.offset({
+							left : e.clientX + document.body.scrollLeft - x,
+							top : e.clientY + document.body.scrollTop - y
+						});
+					};
+					document.onmouseup = function() {// 鼠标放开
+						document.onmousemove = null;
+						document.onmouseup = null;
+						moveObj.css("cursor", "normal");
+					};
 				},
 
 				/**
@@ -229,6 +271,10 @@
 					dialog_body.style.position = "relative";
 					dialog_body.style.backgroundColor = "#fff";
 					dialog_body.style.minHeight = this.options.height + "px";
+					dialog_body.style.overflowY = "auto";
+					dialog_body.style.overflowX = "hidden";
+					dialog_body.style.maxHeight = "300px";
+
 					$(this.el).append(dialog_body);
 
 					$(dialog_body).append(
@@ -439,9 +485,9 @@
 
 window.onload = function() {
 
-	var mask = new CS2C_Shadow({
-		position_id : "b-dialog",
-	}).render();
+	// var mask = new CS2C_Shadow({
+	// position_id : "b-dialog",
+	// }).render();
 	// mask.isMask(true);
 
 	var dialog = new CS2C_Dialog({
@@ -458,6 +504,12 @@ window.onload = function() {
 		height : "150",
 		closable : true
 	}).render();
+
+	// setInterval(function() {
+	// dialog.isInnerMask(false);
+	// }, 5000);
+
+	// dialog.closeDialog();
 
 	var dialog2 = new CS2C_Dialog({
 		dialog_content_id : "dialog2",
@@ -480,8 +532,8 @@ window.onload = function() {
 	});
 	$('#ptest').hide();
 	$('#show').click(function() {
-		// $('#ptest').slideToggle("slow");
-		dialog2.openDialog();
+		$('#ptest').slideToggle("slow");
+		// dialog2.openDialog();
 	});
 
 	$('#showmask').click(function() {
