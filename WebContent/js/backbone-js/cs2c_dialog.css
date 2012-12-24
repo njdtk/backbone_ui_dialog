@@ -87,3 +87,18 @@ a.l-btn {
     padding-right: 18px;
     text-decoration: none;
 }
+
+/* .cs2c_dialog_close_btn{
+background: url("images/panel_tools.gif") no-repeat scroll -16px 0 transparent;
+} */
+
+.cs2c_wizard_dialog_banner{
+	position: relative;
+	top:0px;
+	left:0px;
+	height:20px;
+	background: none repeat scroll 0 0 #FAFAFA;
+}
+.cs2c_wizard_dialog_ctx{
+	padding:10px;
+}

@@ -107,36 +107,31 @@
 			.extend({
 
 				options : {
-					/**
-					 * 创建标签名称
-					 */
-					tagName : 'div',
-					/**
+					/*
 					 * 用户自定义的对话框内容的div层id号
 					 */
 					dialog_content_id : null,
-					/**
+					/*
 					 * 对话框标题
 					 */
 					title : '',
-					/**
+					/*
 					 * 对话框显示的按钮集
 					 */
 					buttons : [],
-					/**
+					/*
 					 * 对话框的宽度、高度（不带单位）
 					 */
-					width : "",
-					height : "",
-					/**
+					width : 300,
+					height : 120,
+					/*
 					 * 是否可关闭
 					 */
 					closable : true,
-					/**
+					/*
 					 * 是否显示背景蒙板
 					 */
 					modal : true
-
 				},
 
 				events : {
@@ -153,9 +148,6 @@
 					$(window).resize(function() {
 						thisEl.render();
 					});
-					$(this.el).resize(function() {
-						alert("");
-					});
 					$(this.el).addClass('cs2c_dialog');
 
 					// 在用户创建对话框内容位置创建对话框
@@ -170,6 +162,7 @@
 					this.createBottomButtons();
 					this.isShadowMask(this.options.modal);
 					this.closeDialog();
+					this.createOtherComponent();
 
 				},
 
@@ -179,13 +172,12 @@
 					thisEl.style.zIndex = zIndex++;
 					// thisEl.style.display = "block";
 					thisEl.style.position = "fixed";
-					thisEl.style.top = ($(document).height() - Number(this.options.height))
+					thisEl.style.top = ($(document).height() - this.options.height)
 							/ 2 + "px";
-					thisEl.style.left = (document.body.offsetWidth - Number(this.options.width))
+					thisEl.style.left = (document.body.offsetWidth - this.options.width)
 							/ 2 + "px";
 					thisEl.style.width = this.options.width + "px";
-					thisEl.style.minHeight = (65 + Number(this.options.height))
-							+ "px";
+					thisEl.style.minHeight = (65 + this.options.height) + "px";
 
 					(document.all) ? $(this.el).siblings('.cs2c_dialog_shadow')
 							.css('filter', 'alpha(opacity=30)') : '';
@@ -391,6 +383,7 @@
 				openDialog : function() {
 					this.isOpenDialog(true);
 					this.isShadowMask(this.options.modal);
+					this.createOtherComponent();
 				},
 
 				/**
@@ -448,7 +441,7 @@
 						this.cancelPressed();
 						break;
 					default:
-						this.otherPressed();
+						this.otherPressed(button);
 						break;
 					}
 				},
@@ -476,12 +469,107 @@
 				 * 
 				 * @author qianqian.yang 2012-11-1
 				 */
-				otherPressed : function() {
+				otherPressed : function(btnClass) {
+
+				},
+
+				/**
+				 * 可自定义其他的控件
+				 * 
+				 * @author qianqian.yang 2012-12-21
+				 */
+				createOtherComponent : function() {
+
 				}
 
 			});
 
-}());// 闭包
+}());
+
+// 模仿块级作用域
+(function() {
+	window.Cs2c_wizard_dialog = CS2C_Dialog
+			.extend({
+
+				_pageNum : 1,
+				options : {
+					cancelable : false
+				},
+				/**
+				 * 可自定义其他的控件
+				 * 
+				 * @author qianqian.yang 2012-12-21
+				 */
+				createOtherComponent : function() {
+					// 页面选择定位初始化
+					this._pageNum = 1;
+
+					var exitClassName = $('#' + this.options.dialog_content_id)
+							.children()[0].className;
+					if (exitClassName != 'cs2c_wizard_dialog_banner') {
+						$('#' + this.options.dialog_content_id).wrapInner(
+								'<div class="cs2c_wizard_dialog_ctx"></div>');
+						$('#' + this.options.dialog_content_id)
+								.prepend(
+										'<div class="cs2c_wizard_dialog_banner"><span>ddd</span><span>dsdsd</span></div>');
+					}
+					$('.cs2c_wizard_dialog_ctx').find('.dialog_wizard_1')
+							.show().siblings().hide();
+
+					this.createUpDownButton();
+				},
+
+				createUpDownButton : function() {
+					var dialog_btn = $(this.el).find('.cs2c_dialog_button');
+					if (dialog_btn.children().length <= 2) {
+						dialog_btn
+								.prepend('<a class="l-btn down" href="#"><span class="dialog-btn-left">下一步</span></a>');
+						dialog_btn
+								.prepend('<a class="l-btn up" href="#"><span class="dialog-btn-left">上一步</span></a>');
+					} else {
+						dialog_btn.find('.up').show();
+						dialog_btn.find('.down').show();
+					}
+					dialog_btn.find('.ok').hide();
+					if (this.options.cancelable) {
+						dialog_btn.find('.cancel').show();
+					} else {
+						dialog_btn.find('.cancel').hide();
+					}
+				},
+
+				otherPressed : function(btnClass) {
+					var dialog_btn = $(this.el).find('.cs2c_dialog_button');
+					var wizardNum = $('#' + this.options.dialog_content_id)
+							.find(".cs2c_wizard_dialog_ctx").children().length;
+					switch (btnClass) {
+					case 'up':
+						this._pageNum--;
+						$('#' + this.options.dialog_content_id).find(
+								'.dialog_wizard_' + this._pageNum).show()
+								.siblings().hide();
+						break;
+					case 'down':
+						this._pageNum++;
+						$('#' + this.options.dialog_content_id).find(
+								'.dialog_wizard_' + this._pageNum).show()
+								.siblings().hide();
+						break;
+
+					default:
+						break;
+					}
+					if (this._pageNum === wizardNum) {
+						dialog_btn.find('.up').hide();
+						dialog_btn.find('.down').hide();
+						dialog_btn.find('.ok').show();
+						dialog_btn.find('.cancel').show();
+					}
+				}
+
+			});
+
+}());
 
 window.onload = function() {
 
@@ -500,8 +588,8 @@ window.onload = function() {
 			id : 'cancel',
 			text : '取消'
 		} ],
-		width : "400",
-		height : "150",
+		width : 400,
+		height : 150,
 		closable : true
 	}).render();
 
@@ -521,8 +609,8 @@ window.onload = function() {
 			id : 'cancel',
 			text : '取消'
 		} ],
-		width : "200",
-		height : "120",
+		width : 200,
+		height : 120,
 		closable : true,
 		modal : false
 	}).render();
@@ -542,6 +630,29 @@ window.onload = function() {
 
 	$('#show2').click(function() {
 		dialog2.isInnerMask(true);
+	});
+
+	/**
+	 * ----------- 测试向导式对话框 -------------
+	 */
+	var dialog3 = new Cs2c_wizard_dialog({
+		dialog_content_id : "dialog3",
+		title : "第三个对话框",
+		buttons : [ {
+			id : 'ok',
+			text : '完成'
+		}, {
+			id : 'cancel',
+			text : '取消'
+		} ],
+		width : 500,
+		height : 250,
+		closable : true,
+		modal : false
+	}).render();
+
+	$('#open_dialog_3').click(function() {
+		dialog3.openDialog();
 	});
 
 };
