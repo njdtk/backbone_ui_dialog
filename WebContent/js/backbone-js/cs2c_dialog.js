@@ -488,15 +488,19 @@
 
 // 模仿块级作用域
 (function() {
+	/**
+	 * Cs2c_wizard_dialog是继承自CS2C_Dialog的子类，创建对象时，初始化都在父类里，在子类只是重写父类中的方法
+	 */
 	window.Cs2c_wizard_dialog = CS2C_Dialog
 			.extend({
-
+				// 使用的标志参数
 				_pageNum : 1,
 				options : {
+					// 在上下步骤控制时，是否需要显示取消按钮
 					cancelable : false
 				},
 				/**
-				 * 可自定义其他的控件
+				 * 可自定义其他的控件，重写父类的方法
 				 * 
 				 * @author qianqian.yang 2012-12-21
 				 */
@@ -504,6 +508,7 @@
 					// 页面选择定位初始化
 					this._pageNum = 1;
 
+					// 创建向导的导航提示条幅
 					var exitClassName = $('#' + this.options.dialog_content_id)
 							.children()[0].className;
 					if (exitClassName != 'cs2c_wizard_dialog_banner') {
@@ -513,6 +518,7 @@
 								.prepend(
 										'<div class="cs2c_wizard_dialog_banner"><span>ddd</span><span>dsdsd</span></div>');
 					}
+					// 只显示第一屏的内容
 					$('.cs2c_wizard_dialog_ctx').find('.dialog_wizard_1')
 							.show().siblings().hide();
 
@@ -527,9 +533,10 @@
 						dialog_btn
 								.prepend('<a class="l-btn up" href="#"><span class="dialog-btn-left">上一步</span></a>');
 					} else {
-						dialog_btn.find('.up').show();
+
 						dialog_btn.find('.down').show();
 					}
+					dialog_btn.find('.up').hide();
 					dialog_btn.find('.ok').hide();
 					if (this.options.cancelable) {
 						dialog_btn.find('.cancel').show();
@@ -538,6 +545,12 @@
 					}
 				},
 
+				/**
+				 * 其他按钮的执行动作
+				 * 
+				 * @author qianqian.yang 2012-12-26
+				 * @param btnClass
+				 */
 				otherPressed : function(btnClass) {
 					var dialog_btn = $(this.el).find('.cs2c_dialog_button');
 					var wizardNum = $('#' + this.options.dialog_content_id)
@@ -555,15 +568,20 @@
 								'.dialog_wizard_' + this._pageNum).show()
 								.siblings().hide();
 						break;
-
 					default:
 						break;
 					}
+					// 如果是最后一页，显示完成和取消按钮
 					if (this._pageNum === wizardNum) {
 						dialog_btn.find('.up').hide();
 						dialog_btn.find('.down').hide();
 						dialog_btn.find('.ok').show();
 						dialog_btn.find('.cancel').show();
+					} else if (this._pageNum === 1) {
+						dialog_btn.find('.up').hide();
+						dialog_btn.find('.down').show();
+					} else {
+						dialog_btn.find('.up').show();
 					}
 				}
 
