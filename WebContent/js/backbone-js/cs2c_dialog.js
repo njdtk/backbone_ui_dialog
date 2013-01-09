@@ -1,4 +1,79 @@
 (function() {
+	window.Cs2c_Tab = Backbone.View.extend({
+		options : {
+			tab_id : '',
+			tabTitles : [],
+			height : 150
+		},
+
+		events : {
+			"click .cs2c_tab_btn" : "changTab",
+		},
+
+		initialize : function() {
+			$(this.el).addClass('cs2c_tab');
+			// 在用户创建对话框内容位置创建对话框
+			$('#' + this.options.tab_id).parent().append(this.el);
+			// 创建控件内容
+			this.createTabs();
+			this.createTabsBody();
+
+		},
+
+		/**
+		 * 创建选项卡控件的选项标题集合
+		 * 
+		 * @author qianqian.yang 2013-1-9
+		 */
+		createTabs : function() {
+			$(this.el).append('<div class="cs2c_tab_title"></div>');
+			// 设置Tab的标签的显示状态
+			var tabTitles = '';
+			for ( var i = 0; i < this.options.tabTitles.length; i++) {
+				tabTitles += '<span class="cs2c_tab_btn '
+						+ (i == 0 ? 'cs2c_tabs_selected ' : '') + '">'
+						+ this.options.tabTitles[i] + '</span>';
+			}
+			$(this.el).find('.cs2c_tab_title').append(tabTitles);
+		},
+
+		/**
+		 * 创建选项卡控件的选项内容集合
+		 * 
+		 * @author qianqian.yang 2013-1-9
+		 */
+		createTabsBody : function() {
+			$(this.el).append($('#' + this.options.tab_id));
+			var tabsBody = $(this.el).find('#' + this.options.tab_id);
+			tabsBody.addClass('cs2c_tab_ctx');
+			tabsBody.height(this.options.height);
+			// 设置Tab的内容的显示状态
+			tabsBody.children().eq(0).show().siblings().hide();
+		},
+
+		render : function() {
+			return this;
+		},
+
+		/**
+		 * 鼠标点击选项卡标题事件
+		 * 
+		 * @author qianqian.yang 2013-1-9
+		 */
+		changTab : function(e) {
+			// 设置Tab的显示位置
+			$(e.currentTarget).addClass('cs2c_tabs_selected').siblings()
+					.removeClass('cs2c_tabs_selected');
+			// 控制Tab内容的显示
+			var index = $(e.currentTarget).index();// 同辈中的索引位置
+			$('#' + this.options.tab_id).children().eq(index).show().siblings()
+					.hide();
+
+		}
+	});
+}());
+
+(function() {
 	/**
 	 * 层次显示的全局变量的大小，用于对话框和遮罩层次的确定
 	 */
@@ -497,7 +572,8 @@
 				_pageNum : 1,
 				options : {
 					// 在上下步骤控制时，是否需要显示取消按钮
-					cancelable : false
+					cancelable : false,
+					steps : []
 				},
 				/**
 				 * 可自定义其他的控件，重写父类的方法
@@ -514,13 +590,26 @@
 					if (exitClassName != 'cs2c_wizard_dialog_banner') {
 						$('#' + this.options.dialog_content_id).wrapInner(
 								'<div class="cs2c_wizard_dialog_ctx"></div>');
-						$('#' + this.options.dialog_content_id)
-								.prepend(
-										'<div class="cs2c_wizard_dialog_banner"><span>ddd</span><span>dsdsd</span></div>');
+
+						var bannerStepString = '';
+						for ( var i = 0; i < this.options.steps.length; i++) {
+							var redText = (i == 0 ? 'redText' : '');
+							bannerStepString += '<span class="cs2c_wizard_dialog_banner_span '
+									+ redText
+									+ '">'
+									+ this.options.steps[i]
+									+ '</span>';
+						}
+						$('#' + this.options.dialog_content_id).prepend(
+								'<div class="cs2c_wizard_dialog_banner">'
+										+ bannerStepString + '</div>');
 					}
 					// 只显示第一屏的内容
 					$('.cs2c_wizard_dialog_ctx').find('.dialog_wizard_1')
 							.show().siblings().hide();
+					$(this.el).find('.cs2c_wizard_dialog_banner').children()
+							.eq(0).addClass('redText').siblings().removeClass(
+									'redText');
 
 					this.createUpDownButton();
 				},
@@ -533,7 +622,6 @@
 						dialog_btn
 								.prepend('<a class="l-btn up" href="#"><span class="dialog-btn-left">上一步</span></a>');
 					} else {
-
 						dialog_btn.find('.down').show();
 					}
 					dialog_btn.find('.up').hide();
@@ -552,26 +640,34 @@
 				 * @param btnClass
 				 */
 				otherPressed : function(btnClass) {
-					var dialog_btn = $(this.el).find('.cs2c_dialog_button');
-					var wizardNum = $('#' + this.options.dialog_content_id)
-							.find(".cs2c_wizard_dialog_ctx").children().length;
+
 					switch (btnClass) {
 					case 'up':
 						this._pageNum--;
-						$('#' + this.options.dialog_content_id).find(
-								'.dialog_wizard_' + this._pageNum).show()
-								.siblings().hide();
 						break;
 					case 'down':
 						this._pageNum++;
-						$('#' + this.options.dialog_content_id).find(
-								'.dialog_wizard_' + this._pageNum).show()
-								.siblings().hide();
 						break;
 					default:
 						break;
 					}
-					// 如果是最后一页，显示完成和取消按钮
+
+					var dialog_btn = $(this.el).find('.cs2c_dialog_button');
+
+					// 1、控制步骤进度条的显示
+					var banners = $(this.el).find('.cs2c_wizard_dialog_banner')
+							.children();
+					banners.eq(this._pageNum - 1).addClass('redText')
+							.siblings().removeClass('redText');
+
+					// 2、控制界面内容切换的显示
+					$('#' + this.options.dialog_content_id).find(
+							'.dialog_wizard_' + this._pageNum).show()
+							.siblings().hide();
+
+					// 控制按钮的显示：如果是最后一页，显示完成和取消按钮
+					var wizardNum = $('#' + this.options.dialog_content_id)
+							.find(".cs2c_wizard_dialog_ctx").children().length;
 					if (this._pageNum === wizardNum) {
 						dialog_btn.find('.up').hide();
 						dialog_btn.find('.down').hide();
@@ -583,6 +679,7 @@
 					} else {
 						dialog_btn.find('.up').show();
 					}
+
 				}
 
 			});
@@ -666,11 +763,17 @@ window.onload = function() {
 		width : 500,
 		height : 250,
 		closable : true,
-		modal : false
+		modal : false,
+		steps : [ "步骤一", "步骤二", "步骤三", "步骤四", "步骤五", "完成" ]
 	}).render();
 
 	$('#open_dialog_3').click(function() {
 		dialog3.openDialog();
 	});
+
+	var tab = new Cs2c_Tab({
+		tab_id : 'cs2c_tab_1',
+		tabTitles : [ 'Title1', 'Title2', 'Title3' ]
+	}).render();
 
 };

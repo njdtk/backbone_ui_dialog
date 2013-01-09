@@ -98,7 +98,61 @@ background: url("images/panel_tools.gif") no-repeat scroll -16px 0 transparent;
 	left:0px;
 	height:20px;
 	background: none repeat scroll 0 0 #FAFAFA;
+	padding: 10px;
+}
+.cs2c_wizard_dialog_banner_span{
+	margin: 10px;
+}
+.redText{
+	color: red;
 }
 .cs2c_wizard_dialog_ctx{
 	padding:10px;
 }
+.cs2c_show_tab{
+	color: blue;
+}
+.cs2c_tab{
+}
+.cs2c_tab_btn{
+	-moz-border-radius: 5px 5px 0 0;
+    background: url("images/tabs_enabled.png") repeat-x scroll left top transparent;
+    color: #416AA3;
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    margin: 0 5px 0 0;
+    padding: 0 10px;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+   border-left: 1px solid #99BBE8;
+   border-top: 1px solid #99BBE8;
+   border-right: 1px solid #99BBE8;
+}
+.cs2c_tab_title{
+	border-bottom: 1px solid #8DB2E3;
+    font-size: 12px;
+    height: 26px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0 0 0 4px;
+}
+.cs2c_tab_btn:hover{
+	background: url("images/tabs_active.png") repeat-x scroll left bottom transparent;
+}
+.cs2c_tabs_selected{
+	background: url("images/tabs_active.png") repeat-x scroll left bottom #7EABCD;
+    color: #416AA3;
+    border-color: #8DB2E3 #8DB2E3 #FFFFFF;
+    border-style: solid;
+    border-width: 1px;
+}
+.cs2c_tab_ctx{
+    border-color: #99BBE8;
+    border-right: 1px solid #99BBE8;
+    border-style: solid;
+    border-width: 0 1px 1px;
+    overflow: auto;
+}
+
