@@ -251,7 +251,7 @@
 							/ 2 + "px";
 					thisEl.style.left = (document.body.offsetWidth - this.options.width)
 							/ 2 + "px";
-					thisEl.style.width = this.options.width + "px";
+					thisEl.style.minwidth = this.options.width + "px";
 					thisEl.style.minHeight = (65 + this.options.height) + "px";
 
 					(document.all) ? $(this.el).siblings('.cs2c_dialog_shadow')
@@ -733,9 +733,11 @@ window.onload = function() {
 	$('#test').click(function() {
 		dialog.openDialog();
 	});
+
 	$('#ptest').hide();
+	$('#ptest1').hide();
 	$('#show').click(function() {
-		$('#ptest').slideToggle("slow");
+		$('#ptest1').slideToggle("slow");
 		// dialog2.openDialog();
 	});
 
