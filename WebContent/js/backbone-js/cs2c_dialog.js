@@ -97,24 +97,37 @@
 			/**
 			 * 如果不是全局遮罩，局部遮罩父节点的id
 			 */
-			parentEl_id : ''
+			parentEl_id : '',
+			/**
+			 * 是否显示请等待的字样
+			 */
+			isLoading : true
 		},
 
 		initialize : function() {
 
 			// 随着浏览器窗体大小的改变渲染，包括样式和位置
-			var thisEl = this;
-			$(window).resize(function() {
-				thisEl.calMask();
-			});
+			// var thisEl = this;
+			// $(window).resize(function() {
+			// thisEl.calMask();
+			// });
 
 			$(this.el).addClass('dialog-mask');
-			// 在用户创建对话框内容位置创建对话框
-			$('#' + this.options.position_id).after(this.el);
+
+			if (this.options.isAllMask) {
+				// 在用户创建对话框内容位置创建对话框
+				$('#' + this.options.position_id).after(this.el);
+			} else {
+				$('#' + this.options.parentEl_id).append(this.el);
+			}
+			_.bindAll(this, 'render');
 		},
 
 		render : function() {
-			$(this.el).after('<div class="dialog-mask-msg">正在处理，请稍侯...</div>');
+			if (this.options.isLoading) {
+				$(this.el).after(
+						'<div class="dialog-mask-msg">正在处理，请稍侯...</div>');
+			}
 			return this;
 		},
 
@@ -149,25 +162,34 @@
 
 		isMask : function(flag) {
 			var parent = this.options.isAllMask ? $(document) : $('#'
-					+ parentEl_id);
+					+ this.options.parentEl_id);
 			var mask = $(this.el);
-			var msg = $(this.el).next();
 			mask.css({
 				height : parent.height(),
 				width : parent.width(),
 				zIndex : zIndex++
 			});
-			msg.css({
-				left : (parent.width() - msg.outerWidth()) / 2,
-				top : (parent.height() - msg.outerHeight()) / 2,
-				zIndex : zIndex++
-			});
+
 			if (flag) {
 				mask.show();
-				msg.show();
 			} else {
 				mask.hide();
-				msg.hide();
+			}
+
+			// 如果需要显示加载字样
+			if (this.options.isLoading) {
+				var msg = $(this.el).next();
+				msg.css({
+					left : (parent.width() - msg.outerWidth()) / 2,
+					top : (parent.height() - msg.outerHeight()) / 2,
+					zIndex : zIndex++
+				});
+
+				if (flag) {
+					msg.show();
+				} else {
+					msg.hide();
+				}
 			}
 		}
 
@@ -206,7 +228,11 @@
 					/*
 					 * 是否显示背景蒙板
 					 */
-					modal : true
+					modal : true,
+					/*
+					 * 对话框的绝对定位，如果有位置的定义，则如下：position:{x:100,y:200}
+					 */
+					position : {}
 				},
 
 				events : {
@@ -243,15 +269,26 @@
 
 				render : function() {
 
+					var top, left;
+
 					var thisEl = $(this.el)[0];
 					thisEl.style.zIndex = zIndex++;
 					// thisEl.style.display = "block";
 					thisEl.style.position = "fixed";
-					thisEl.style.top = ($(document).height() - this.options.height)
-							/ 2 + "px";
-					thisEl.style.left = (document.body.offsetWidth - this.options.width)
-							/ 2 + "px";
+
+					if (!this.options.position.hasOwnProperty('x')) {
+						top = (document.documentElement.clientHeight - this.options.height)
+								/ 2 + "px";
+						left = (document.documentElement.clientWidth - this.options.width)
+								/ 2 + "px";
+					} else {
+						top = this.options.position.y + "px";
+						left = this.options.position.x + "px";
+					}
+					thisEl.style.top = top;
+					thisEl.style.left = left;
 					thisEl.style.minwidth = this.options.width + "px";
+					thisEl.style.width = this.options.width + "px";
 					thisEl.style.minHeight = (65 + this.options.height) + "px";
 
 					(document.all) ? $(this.el).siblings('.cs2c_dialog_shadow')
@@ -405,7 +442,9 @@
 				createDialogShadow : function() {
 					$(this.el).after(
 							'<div class="cs2c_dialog_shadow" style="z-index:'
-									+ (zIndex++) + '"></div>');
+									+ (zIndex++) + '; height:'
+									+ document.documentElement.scrollHeight
+									+ 'px;"></div>');
 				},
 
 				/**
@@ -443,10 +482,15 @@
 				 *            true 打开对话框 flase 关闭对话框
 				 */
 				isOpenDialog : function(flag) {
+					$(this.el).css({
+						zIndex : zIndex++
+					});
 					if (flag) {
 						$(this.el).show();
+						$('#' + this.options.dialog_content_id).show();
 					} else {
 						$(this.el).hide();
+						$('#' + this.options.dialog_content_id).hide();
 					}
 				},
 
@@ -455,10 +499,16 @@
 				 * 
 				 * @author qianqian.yang 2012-10-29
 				 */
-				openDialog : function() {
+				openDialog : function(x, y) {
+					this.options.position = {
+						x : x,
+						y : y
+					};
 					this.isOpenDialog(true);
+
 					this.isShadowMask(this.options.modal);
 					this.createOtherComponent();
+					this.render();
 				},
 
 				/**
