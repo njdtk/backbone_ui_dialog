@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../../lib/jquery.js"></script>
+<script type="text/javascript" src="../../lib/underscore.js"></script>
+<script type="text/javascript" src="../../lib/backbone.js"></script>
+<link rel="stylesheet" href="cs2c_dialog.css">
+<script type="text/javascript" src="cs2c_dialog.js"></script>
+
+	
+</head>
+<body>
+<h2>cs2c Window</h2>
+<script type="text/javascript">
+		<!--
+		window.onload = function() {
+
+			// var mask = new CS2C_Shadow({
+			// position_id : "b-dialog",
+			// }).render();
+			// mask.isMask(true);
+
+			var dialog = new CS2C_Dialog({
+				dialog_content_id : "b-dialog",
+				title : "新建对话框",
+				buttons : [ {
+					id : 'ok',
+					text : '确定'
+				}, {
+					id : 'cancel',
+					text : '取消'
+				} ],
+				width : 400,
+				height : 150,
+				closable : true
+			}).render();
+
+			// setInterval(function() {
+			// dialog.isInnerMask(false);
+			// }, 5000);
+
+			// dialog.closeDialog();
+
+			var dialog2 = new CS2C_Dialog({
+				dialog_content_id : "dialog2",
+				title : "另外一个弹出的对话框",
+				buttons : [ {
+					id : 'ok',
+					text : '确定'
+				}, {
+					id : 'cancel',
+					text : '取消'
+				} ],
+				width : 200,
+				height : 120,
+				closable : true,
+				modal : false
+			}).render();
+
+			$('#test').click(function() {
+				dialog.openDialog();
+			});
+
+			$('#ptest').hide();
+			$('#ptest1').hide();
+			$('#show').click(function() {
+				$('#ptest1').slideToggle("slow");
+				// dialog2.openDialog();
+			});
+
+			$('#showmask').click(function() {
+				dialog.isInnerMask(true);
+			});
+
+			$('#show2').click(function() {
+				dialog2.isInnerMask(true);
+			});
+
+			/**
+			 * ----------- 测试向导式对话框 -------------
+			 */
+			var dialog3 = new Cs2c_wizard_dialog({
+				dialog_content_id : "dialog3",
+				title : "第三个对话框",
+				buttons : [ {
+					id : 'ok',
+					text : '完成'
+				}, {
+					id : 'cancel',
+					text : '取消'
+				} ],
+				width : 500,
+				height : 250,
+				closable : true,
+				modal : false,
+				steps : [ "步骤一", "步骤二", "步骤三", "步骤四", "步骤五", "完成" ]
+			}).render();
+
+			$('#open_dialog_3').click(function() {
+				dialog3.openDialog();
+			});
+			var tab = new Cs2c_Tab({
+				tab_id : 'cs2c_tab_1',
+				tabTitles : [ 'Title1', 'Title2', 'Title3' ]
+			}).render();
+
+			var wizard = new Cs2c_Wizard({
+				wizard_id : "newwizard",
+				achievable:true,
+				cancelable:true,
+				okHasUp:false,
+				steps : [ "步骤一", "步骤二", "步骤三", "步骤四", "步骤五", "完成" ]
+			}).render();
+			
+			wizard.downPressed = function(index){
+				switch (index) {
+				case 2:
+					wizard.hideWizardStep(3);
+					wizard.showWizardStep(3);
+					return true;
+					break;
+
+				default:
+					return true;
+					break;
+				}
+			};
+			
+			$('#open_msg').click(function() {
+				/* cs2c_Message('修改成功！');
+				wizard.showWizardStep(2); */
+				wizard.hideWizardStep(2);
+				cs2c_confirm('您确定要关闭该按钮吗？',function(r){
+					if(r){
+						alert('confrim:'+r);
+					}else{
+						alert('confrim:'+r);
+					}
+				});
+			});
+
+		};
+
+		-->
+		</script>
+
+<div style="margin:10px 0">
+		<a id="test" href="#">Open</a>
+		<br>
+		<a id="open_dialog_3" href="#">Open Dialog3</a>
+		<br>
+		<a id="open_msg" href="#">显示信息提示</a>
+</div>
+
+<!-- 第一个对话框 -->
+<div id="b-dialog" style="padding: 10px">
+第一个对话框
+这是一个普通对话框的panel空白区域。
+<br>
+<a id="show" href="#">show</a>
+<a id="showmask" href="#">show mask</a>
+
+<div id="ptest">
+<p>对话框内容在此处显示。</p>
+<p>对话框内容在此处显示。</p>
+<p>对话框内容在此处显示。</p>
+<p>对话框内容在此处显示。</p>
+<p>对话框内容在此处显示。</p>
+<p>对话框内容在此处显示。</p>
+<p>对话框内容在此处显示。</p>
+<p>对话框内容在此处显示。</p>
+<p>对话框内容在此处显示。</p>
+<p>对话框内容在此处显示。</p>
+<p>对话框内容在此处显示。</p>
+<p>对话框内容在此处显示。</p>
+<p>对话框内容在此处显示。</p>
+<p>对话框内容在此处显示。</p>
+<p>对话框内容在此处显示。</p>
+<p>对话框内容在此处显示。</p>
+</div>
+<div id="ptest1">
+<p>对话框内容在此处显示。对话框内容在此处显示。对话框内容在此处显示。对话框内容在此处显示。</p>
+</div>
+
+</div>
+
+
+<!-- 第二个对话框 -->
+<div id="dialog2" style="padding: 10px">
+<p>第二个对话框</p>
+<a id="show2" href="#">show2</a>
+</div>
+
+<!-- 第三个对话框 -->
+<div id="dialog3">
+<div class="dialog_wizard_1">
+<div id="cs2c_tab_1" style="padding: 10px">
+<div>Tab1</div>
+<div>Tab2</div>
+<div>Tab3</div>
+</div>
+
+</div>
+
+
+
+<div class="dialog_wizard_2">步骤二</div>
+<div class="dialog_wizard_3">步骤三</div>
+<div class="dialog_wizard_4">步骤四</div>
+<div class="dialog_wizard_5">步骤五</div>
+<div class="dialog_wizard_6">完成</div>
+</div>
+
+
+
+
+<div id="newwizard">
+<div class="dialog_wizard_1">步骤一</div>
+<div class="dialog_wizard_2">步骤二</div>
+<div class="dialog_wizard_3">步骤三</div>
+<div class="dialog_wizard_4">步骤四</div>
+<div class="dialog_wizard_5">步骤五</div>
+<div class="dialog_wizard_6">完成</div>
+</div>
+
+
+
+
+
+
+</body>
+</html>

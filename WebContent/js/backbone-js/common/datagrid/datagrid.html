@@ -1,0 +1,218 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=GB2312" />
+<meta http-equiv="X-UA-Compatible" value="IE=edge" />
+<title>Backbone UI</title>
+<link type="text/css" rel="stylesheet" href="themes/icon.css">
+
+
+<link type="text/css" rel="stylesheet" href="themes/cs2c_dialog.css">
+<script src='themes/0_jquery-1.8.2.js' type='text/javascript'></script>
+<script src='themes/1_underscore-1.4.2.js' type='text/javascript'></script>
+<!--script src='themes/2_json2.js' type='text/javascript'></script>
+<script src='themes/has_model.js' type='text/javascript'></script-->
+<script src='themes/3_backbone-0.9.2.js' type='text/javascript'></script>
+<script src='themes/4_laconic.js' type='text/javascript'></script>
+<script src='themes/common.js' type='text/javascript'></script>
+
+
+<script src='themes/pagerView.js' type='text/javascript'></script>
+<script src='themes/searchbox.js' type='text/javascript'></script>
+<script src='themes/cs2c_dialog.js' type='text/javascript' charset='utf-8'></script>
+<script src='themes/validatebox.js' type='text/javascript'></script>
+
+<!--<script src='Operation.js' type='text/javascript'></script>-->
+
+<script src='themes/backbone_ui.js' type='text/javascript'></script>
+<script src='themes/datagridView.js' type='text/javascript'></script>
+<script src='themes/ManageView.js' type='text/javascript'></script>
+<link rel='stylesheet' type='text/css' href='themes/table_view.css'>
+<style>
+	.right_li {
+		width:150px; 
+		border-style:solid; 
+		border-width:1px;
+		list-style-type :none;
+	}
+	
+	.hang input{
+		height: 30px;
+		line-height: 30px;
+		background:none;
+		border:0;
+		width:100%;
+		cursor:pointer
+	}
+</style>
+</head>
+
+<body>
+<div id="cs2c_datagrid"></div>
+
+<script type="text/javascript">
+	
+	    var del=function (data){
+			alert(data.number);
+		};
+
+	
+    $(window).load(function() {
+
+     var   table = new TableManageView({
+		  pagination:true,
+		  parentEl:"#cs2c_datagrid",
+          url:'http://localhost:8080/neo-service/groups',
+          url_param:{
+        	  "groupName":"普通管理组",
+        	  "method":"getByName"
+        	  
+		  }
+     
+     		getRealList:function(resp){
+     			return{
+  					list:[1,2],
+     				total:10
+     			}
+     		}
+		  /*
+		  data:[{
+				name:"tenth",
+				number:"10",
+				temp:"yanpeiqiong"
+				},
+				{
+				name:"eleven",
+				number:"11",
+				temp:"tianyuanyuan"
+				},
+				{
+				name:"twelve",
+				number:"12",
+				temp:"weiting"
+		  }],
+		  */
+          onItemClick : function(model) {
+			//alert("You will delete the row!!");
+			//this.model.remove(model);
+			//this.model.add({"name":"zero","number":"0"});
+			//model.set({"name":"first11"});
+            alert(model.get('name'));
+          },
+		  onRightClick:function(pos){
+			
+			//console.log(pos);
+		    PopMenu.style.left = pos.x+'px';
+			PopMenu.style.top = pos.y+'px';
+			//PopMenu.style.top="0px";
+			PopMenu.style.visibility="";
+			
+		  },
+		  toolbar:[
+		  {
+				id : 'btnadd2',
+				text : '添加',
+				disabled : false,
+				iconCls : 'icon-add',
+				handler : function() {					
+					this.allModels.add({"name":"zero","number":"0","temp":"ypq"});
+					this.setCollection();
+				}
+		  },
+		  {
+				id : 'btncut',
+				disabled : true,
+				text : '删除',
+				iconCls : 'icon-cancel',
+				handler : function() {
+					//this.collection.remove()
+				}
+		  }
+		  ],
+		 
+		code:true,			 
+		checkbox:true,
+		
+		  columns : [
+		  {
+				sortable : true,
+				width : 300,
+				title : 'Name',		
+				content : 'name',
+				formatter:function(value,rowData,rowIndex){
+					return value+rowIndex ;
+				}
+          }, 
+		  {
+				title : 'Number',
+				width : 100,
+				content : 'number'
+          },
+		  {
+			    width : 300,
+			    sortable : true,
+				title : 'Engineer',           
+				content : 'temp'
+          },
+		  {
+				title : 'Operations',
+				width :100,
+				operations:function(value,rowData,rowIndex){
+				
+					var optStr={
+						name: rowData.get("name"),
+						number:rowData.get("number"),
+						temp:rowData.get("temp")
+					}
+					var operate=[];
+					operate.push(createOption("del",json2str(optStr), "删除","icon-migrate_delete"));
+					operate.push(createOption("edit",json2str(optStr), "编辑","icon-migrate_edit"));
+					return operate.join(" ");
+				
+					//var option1= '<span class="opt_delete">删除</span>';
+					//var option2='<span class="opt_edit">编辑</span>';
+					//return option1+" "+option2;
+					/*
+					var operate=[];
+					operate.push({optUrl:"ddddddd.action",optName:"opt_delete",optMsg:"确定要删除吗？",showName:"删除"});
+					operate.push({optUrl:"edit.action",optName:"opt_edit",optMsg:"确定要修改吗？",showName:"编辑"});
+					return operate;
+					*/
+			    }
+		  }
+		  ],
+		  pager:{
+				pageNo:1,
+				pageSize:5,
+				pageList:[5,10,15]
+		  }
+		  
+        });	   
+		
+
+    });
+  </script>
+ <div id="mm" class="cs2c_options" style="width:120px;">
+	<div onclick="append()">Append</div>
+	<div onclick="remove()">Remove</div>
+</div>
+
+<!--右键菜单-->
+<div id="PopMenu" style="position:absolute; width:auto; height:auto; z-index:1; visibility: hidden; border-style:solid; border-width:1px; background-color:red">
+											
+		<li class="hang right_li">
+			<input type="button" class="leftMenu" name="hostConf" value="编辑信息"/>
+		</li>
+		<li class="hang right_li">
+			<input type="button" class="leftMenu" name="hostGroupConf" value="改变所属组"/>
+		</li>
+		<li class="hang right_li">
+			<input type="button" class="leftMenu" name="serviceConf" value="服务配置"/>
+		</li>
+		<li class="hang right_li">
+			<input type="button" class="leftMenu" name="commandConf" value="命令配置"/>
+		</li>
+
+	</div>
+</body>
+</html>

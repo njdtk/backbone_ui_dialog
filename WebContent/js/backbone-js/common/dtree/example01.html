@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+
+<head>
+	<title>Destroydrop &raquo; Javascripts &raquo; Tree</title>
+
+	<link rel="StyleSheet" href="dtree.css" type="text/css" />
+	<script type="text/javascript" src="dtree.js"></script>
+
+</head>
+
+<body>
+
+<h1></h1>
+
+<h2></h2>
+
+<div class="dtree">
+
+
+
+	<script type="text/javascript">
+		<!--
+		var treeData={ "list": 
+							[
+								{ "roleName":"neoadm_r", "id":"1", "parentId":"-1"},
+								{ "roleName":"sysadm_r", "id":"11", "parentId":"1"},
+								{ "roleName":"secadm_r", "id":"12", "parentId":"1"},
+								{ "roleName":"auditadm_r", "id":"13", "parentId":"1"},
+								{ "roleName":"guest_r", "id":"14", "parentId":"1"},
+								{ "roleName":"sys1_r", "id":"111", "parentId":"11"},
+								{ "roleName":"sys2_r", "id":"112", "parentId":"11"},
+								{ "roleName":"guest1_r", "id":"141", "parentId":"14"},
+								{ "roleName":"guest2_r", "id":"142", "parentId":"14"},
+								{ "roleName":"guest3_r", "id":"143", "parentId":"14"},
+								{ "roleName":"guest2_sub1_r", "id":"1421", "parentId":"142"},
+								{ "roleName":"guest2_sub2_r", "id":"1422", "parentId":"142"},
+							]
+					 }
+		d = new dTree("d");
+		
+		var dataList=treeData.list;
+		for(var i=0; i<dataList.length;i++){
+			d.add(dataList[i].id, dataList[i].parentId, dataList[i].roleName, 'example01.html');
+		}
+		
+		d.onItemClick=function(id){
+			var nodeId = d.aNodes[id].id;
+			var nodeName = d.aNodes[id].name;
+			
+			alert(nodeId+":"+nodeName);
+		}
+		//d.itemClick="wo shi  itemClick!";
+		//d.add(1,-1,'neoadm_r');
+		//d.add(11,1,'sysadm_r');
+		/*
+		d.add(0,-1,'My example tree');
+		d.add(1,0,'Node 1','example01.html');
+		d.add(2,0,'Node 2','example01.html');
+		d.add(3,1,'Node 1.1','example01.html');
+		d.add(4,0,'Node 3','example01.html');
+		d.add(5,3,'Node 1.1.1','example01.html');
+		d.add(6,5,'Node 1.1.1.1','example01.html');
+		d.add(7,0,'Node 4','example01.html');
+		d.add(8,1,'Node 1.2','example01.html');
+		d.add(9,0,'My Pictures','example01.html','Pictures I\'ve taken over the years','','','img/imgfolder.gif');
+		d.add(10,9,'The trip to Iceland','example01.html','Pictures of Gullfoss and Geysir');
+		d.add(11,9,'Mom\'s birthday','example01.html');
+		d.add(12,0,'Recycle Bin','example01.html','','','img/trash.gif');
+		*/
+		document.write(d);
+
+		//-->
+	</script>
+
+</div>
+
+
+
+</body>
+
+</html>
