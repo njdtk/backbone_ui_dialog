@@ -1,0 +1,43 @@
+<!DOCTYPE html >
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" value="IE=edge" />
+<link rel="stylesheet" type="text/css" href="css.css">
+<style>
+
+</style>
+</head>
+<body>
+<input class="calender" id="calender" readonly>
+
+<span id="time1" class="spinner"></span>
+<!--<span id="time2" class="spinner"></span>-->
+</body>
+<script type="text/javascript" src="../lib/jquery.js"></script>
+<script type="text/javascript" src="../lib/underscore.js"></script>
+<script type="text/javascript" src="../lib/backbone.js"></script>
+<script type="text/javascript" src="datePicker.js"></script>
+<script type="text/javascript" src="timePicker.js"></script>
+<script>
+	new datePickerView({
+		'id':'calender',
+		'dateFormatter':1
+		//'timePicker':true
+	});
+	
+	new timePickerView({
+		//'initVal':false,
+	'id':'time1',
+'start':'08:30',
+	'over':'09:10'
+});
+	
+	//new timePickerView({
+		//'initVal':false,
+	//	'id':'time2'
+		//'min':'08:30'
+	//});
+</script>
+
+</html>

@@ -1,0 +1,12 @@
+.select-area{float:left}
+.select-title{height:20px;line-height:20px}
+.select-mark{float: left;height: 12px;line-height: 12px;margin-left: 10px;margin-right: 10px;background:url('img/mark_arrow.png') no-repeat;width:12px;margin-top:55px}
+.select-content{float:left;border:1px solid #666;width:173px;height:100px;overflow:auto;background: #fff}
+
+.select-body-item{height:10px;padding:4px;position:relative;line-height:12px;cursor:pointer;}
+.select-body-item:hover{background:#cdcdcd}
+
+.select-left-arrow{background:url('img/left_arrow.png') no-repeat;height:16px;width:16px;display:inline-block;position:absolute;right:0px}
+.select-right-arrow{background:url('img/right_arrow.png') no-repeat;height:16px;width:16px;display:inline-block;position:absolute;right:0px}
+.cs2c-selectbox{height:122px}
+.cs2c-selectbox p{float:left}

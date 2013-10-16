@@ -1,0 +1,222 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=GB2312" />
+<meta http-equiv="X-UA-Compatible" value="IE=edge" />
+<title>Dtree</title>
+
+<script src='../lib/jquery.js' type='text/javascript'></script>
+<script src='../lib/underscore.js' type='text/javascript'></script>
+<script src='../lib/backbone.js' type='text/javascript'></script>
+
+<link rel="StyleSheet" href="dtree.css" type="text/css" />
+<script src='dtreeView.js' type='text/javascript'></script>
+<script src='rightMenuView.js' type='text/javascript'></script>
+<style>
+	
+</style>
+</head>
+
+<body>
+<div id="cs2c_dtree" style="font-family:Verdana"></div>
+
+<script type="text/javascript">
+		
+		tempModes=[
+			{ "content":"new_r1", "id":"1111", "pid":"1421", "model":{"name":"new_r1", "type":"other"}},
+			{ "content":"new_r2", "id":"1112", "pid":"1422", "model":{"name":"new_r2", "type":"other"}},
+			{ "content":"new_r3", "id":"1113", "pid":"141", "model":{"name":"new_r3", "type":"other"}},
+			{ "content":"new_r4", "id":"1114", "pid":"14", "model":{"name":"new_r4", "type":"other"}},
+			{ "content":"new_r5", "id":"1115", "pid":"14", "model":{"name":"new_r5", "type":"other"}},
+			{ "content":"new_r6", "id":"1116", "pid":"1", "model":{"name":"new_r6", "type":"other"}}
+		];
+		
+		order=0;
+		var dtree=null;
+		
+		var deleteNode=function(){
+			alert(dtree.getSelected().length);
+			dtree.deleteNodes(dtree.getSelected());
+		};
+	    var addNode=function (data){
+			//alert("add");
+			
+			dtree.addNode(tempModes[order]);
+			order=(order+1)%6;
+		};
+		
+		var getChildren=function(){
+			//console.log(dtree.selectedNode)
+			if(dtree.selectedNode){
+				alert(JSON.stringify(dtree.getChildren(dtree.allNodes[dtree.selectedNode])));
+			}
+			
+		};
+		
+		var getAllChildren=function(){
+			if(dtree.selectedNode){
+				alert(JSON.stringify(dtree.getAllChildren(dtree.allNodes[dtree.selectedNode])));
+			}
+		};
+			
+		var getSelected=function(){
+			alert(JSON.stringify(dtree.getSelected()))
+		};
+		
+		var updateNode=function(){
+			dtree.updateNode({
+				"childList":[], 
+				"childNum":0, 
+				"pIndex":1, 
+				"content":"update_name",
+				"id":"111",
+				"pid":"1",
+				"model":{"name":"update_name", "type":"other", "index":5}
+			})
+		};
+		
+		var closeAll=function(){
+			//dtree.closeAll();
+			dtree.closeAll();
+		};
+		
+		var openAll=function(){
+			dtree.openAll();
+		};
+		
+		var func1=function(model){			
+			$(dtree.el+"_rightMenu").hide();
+			alert("func1:"+model.name);
+		};
+		
+		var func2=function(model){
+			$(dtree.el+"_rightMenu").hide();
+			alert("func2:"+model.name);
+			
+		};
+		
+		var func3=function(model){
+			$(dtree.el+"_rightMenu").hide();
+			alert("func3:"+model.name);
+		};
+		
+		var func4=function(model){
+			$(dtree.el+"_rightMenu").hide();
+			alert("func4:"+model.name);
+		};
+		var func5=function(model){
+			$(dtree.el+"_rightMenu").hide();
+			alert("func5:"+model.name);
+		};
+		
+    $(window).load(function() {
+	
+	
+     dtree = new DtreeView({
+		  parentEl:"#cs2c_dtree",
+		  objName:"dtree1",
+		  list:[
+					{ "content":"neoadm_r", "id":"1", "pid":"-1", "model":{"name":"neoadm_r", "type":"admin"}},
+					{ "content":"sysadm_r", "id":"11", "pid":"1", "model":{"name":"sysadm_r", "type":"admin"}},
+					{ "content":"secadm_r", "id":"12", "pid":"1", "model":{"name":"secadm_r", "type":"admin"}},
+					{ "content":"auditadm_r", "id":"13", "pid":"1", "model":{"name":"auditadm_r", "type":"admin"}},
+					{ "content":"guest_r", "id":"14", "pid":"1", "model":{"name":"guest_r", "type":"admin"}},
+					{ "content":"sys1_r", "id":"111", "pid":"11", "model":{"name":"sys1_r", "type":"other"}},
+					{ "content":"sys2_r", "id":"112", "pid":"11", "model":{"name":"sys2_r", "type":"other"}},
+					{ "content":"guest1_r", "id":"141", "pid":"14", "model":{"name":"guest1_r", "type":"other"}},
+					{ "content":"guest2_r", "id":"142", "pid":"14", "model":{"name":"guest2_r", "type":"other"}},
+					{ "content":"guest3_r", "id":"143", "pid":"14", "model":{"name":"guest3_r", "type":"other"}},
+					{ "content":"guest2_sub1_r", "id":"1421", "pid":"142", "model":{"name":"guest2_sub1_r", "type":"other"}},
+					{ "content":"guest2_sub2_r", "id":"1422", "pid":"142", "model":{"name":"guest2_sub2_r", "type":"other"}},
+					{ "content":"guest3_sub1_r", "id":"1431", "pid":"143", "model":{"name":"guest3_sub1_r", "type":"other"}}
+					//{ "content":"guest2_sub1_sub1_r", "id":"14228", "pid":"1421", "model":{"name":"guest2_sub1_sub1_r", "type":"other"}}
+				],
+				
+          
+          onItemClick:function(model) {
+		  
+			//弹出显示内容
+            //alert(model.content);   
+			//弹出选中节点的子节点
+			//alert(JSON.stringify(dtree.getChildren(model).length));
+			//console.log(model);
+			
+			
+          },
+		  
+		  rightMenu:{
+		  
+		    list:[
+					[
+						{"optName":"操作1", "optParam":"j1"},
+						{"optName":"操作2","optParam":"2"},
+						{"optName":"操作3","optParam":"3"}
+					],
+					[
+						{"optName":"操作4","optParam":"4"},
+						{"optName":"操作5","optParam":"5"}
+					]
+				
+				],
+				
+			optFunc:function(param,model){
+				console.log(param);
+				
+			}
+		  
+		  },
+		  
+		  onRightClick:function(){
+			
+			
+			
+		  }
+		  
+        });	   
+	});	
+	
+	/*
+	var strAppend="<span onclick='javascript: del("+JSON.stringify({"name":"noyes"})+")' style='cursor:pointer'>"
+				+"<img src='img/plus.gif'/>"
+				+"<img src='img/page.gif'/>"
+				+"</span><br>"
+
+	
+	$("#cs2c_dtree").append(strAppend);
+    });
+	*/
+  </script>
+  
+ 
+ <div id="mm" class="cs2c_options" style="margin-top:20px">
+	<div>
+		<input type="button" value="添加" onclick="addNode()" /> 
+		<input type="button" value="删除" onclick="deleteNode()" />
+		<input type="button" value="获取子节点" onclick="getChildren()" />
+		<input type="button" value="获取子孙节点" onclick="getAllChildren()" />
+		<input type="button" value="获取选中节点" onclick="getSelected()" />
+		<input type="button" value="编辑" onclick="updateNode()" />
+		<input type="button" value="关闭树" onclick="closeAll()" />
+		<input type="button" value="展开树" onclick="openAll()" />
+	</div>
+	
+</div>
+
+<!--右键菜单-->
+<div id="PopMenu" style="position:absolute; visibility: hidden; border:solid 1px; background:yellow; width:200px">
+	
+		<ul class="ul_rightMenu">
+			<li class="li_right_rline">编辑信息</li>
+			<li class="li_right_rline">改变所属组"</li>
+			<li class="li_right_rline">服务配置</li>
+			<li class="li_right_nline">----------------</li>
+			<li class="li_right_rline">命令配置</li>
+		</ul>
+		
+		
+	
+		
+
+	</div>
+</body>
+</html>

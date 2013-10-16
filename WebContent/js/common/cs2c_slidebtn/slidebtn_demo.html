@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<style>
+.slide_btn{cursor:pointer;border-radius:2px;width:68px;height:20px;border:1px solid #999;color:#000;background:#ddd;font-family:"微软雅黑";font-size:12px;}
+.slide_btn div{width:48px;height:20px;text-align:center;line-height:20px;border-radius:2px;}
+.on{ float:left;background:#8d8d8d;border-right:1px solid #999;color:#fff;}
+.off{float:right; background:#efefef;border-left:1px solid #999;}			
+		</style>
+	</head>
+	<body>
+		<div>
+		
+		<div id="aaa"></div>		
+		<button>点击</button>
+		
+	</div>
+	
+		
+		
+	</body>
+	<script src="../lib/jquery.js"></script>
+	<script src="../lib/underscore.js"></script>
+	<script src="../lib/backbone.js"></script>
+	<script src="slidebtn.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			var aa = new slideBtn({
+				'id' : 'aaa',
+				'value' : true,
+				"action" : function() {
+					console.log(aa.val);
+				}
+			});
+	
+			$('button').click(function() {
+				alert(aa.val);
+	
+			});
+		});
+
+	</script>
+</html>

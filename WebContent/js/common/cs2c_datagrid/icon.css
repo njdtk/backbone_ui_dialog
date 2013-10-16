@@ -1,0 +1,303 @@
+.icon-add{
+	background:url('icons/tool_icons.gif') no-repeat 0px 0px;
+}
+.icon-group_change{
+	background:url('icons/icons.gif') no-repeat -16px -32px;
+}
+.icon-group_edit{
+	background:url('icons/icons.gif') no-repeat -64px -65px;
+}
+.icon-group_default_role_edit{
+	background:url('icons/icons.gif') no-repeat -64px -48px;
+}
+.icon-group_role_edit{
+	background:url('icons/icons.gif') no-repeat -64px -16px;
+}
+.icon-attribute{
+	background:url('icons/attribute.gif') no-repeat;
+}
+.icon-audit_forms{
+	background:url('icons/audit_forms.gif') no-repeat;
+}
+.icon-audit_set{
+	background:url('icons/icons.gif') no-repeat -48px 0px;
+}
+.icon-audit_success{
+	background:url('icons/audit_success.gif') no-repeat;
+}
+
+.icon-backup_recover{
+	background:url('icons/tool_icons.gif') no-repeat 0px -208px;
+}
+.icon-blank{
+	background:url('icons/blank.gif') no-repeat;
+}
+
+.icon-back{
+	background:url('icons/tool_icons.gif') no-repeat 0px -144px;
+}
+.icon-cancel{
+	background:url('icons/tool_icons.gif') no-repeat 0px -32px;
+}
+.icon-check{
+	background:url('icons/icons.gif') no-repeat -80px -16px;
+}
+.icon-close{
+	background:url('icons/tool_icons.gif') no-repeat 0px -240px;
+}
+.icon-cloud_storage_client_apply{
+	background:url('icons/cloud_storage_client_apply.gif') no-repeat;
+}
+.icon-cloud_storage_client_apply2{
+	background:url('icons/cloud_storage_client_apply2.gif') no-repeat;
+}
+.icon-cloud_storage_client_apply3{
+	background:url('icons/cloud_storage_client_apply3.gif') no-repeat;
+}
+.icon-cloud_storage_client_installer{
+	background:url('icons/cloud_storage_client_installer.gif') no-repeat;
+}
+.icon-cloud_storage_client_installer2{
+	background:url('icons/cloud_storage_client_installer2.gif') no-repeat;
+}
+.icon-cloud_storage_client_installer3{
+	background:url('icons/cloud_storage_client_installer3.gif') no-repeat;
+}
+.icon-cloud{
+	background:url('icons/cloud.gif') no-repeat;
+}
+.icon-cloud2.gif{
+	background:url('icons/cloud2.gif') no-repeat;
+}
+.icon-cut{
+	background:url('icons/cut.gif') no-repeat;
+}
+.icon-deploy_disable{
+	background:url('icons/tool_icons.gif') no-repeat 0px -224px;
+}
+.icon-deploy_forbid{
+	background:url('icons/tool_icons.gif') no-repeat 0px -288px;
+}
+.icon-deploy_permit{
+	background:url('icons/tool_icons.gif') no-repeat 0px -320px;
+}
+.icon-deploy_start{
+	background:url('icons/deploy_start.gif') no-repeat;
+}
+.icon-deploy{
+	background:url('icons/icons.gif') no-repeat -64px 0px;
+}
+.icon-detail{
+	background:url('icons/detail.gif') no-repeat;
+}
+.icon-design_failed{
+	background:url('icons/design_failed.gif') no-repeat;
+}
+.icon-desktop_remote{
+	background:url('icons/icons.gif') no-repeat -48px -65px;
+}
+.icon-edit{
+	background:url('icons/icons.gif') no-repeat -32px 0px;
+}
+.icon-encrypt_config{
+	background:url('icons/encrypt_config.gif') no-repeat;
+}
+.icon-daily_action{
+	background:url('icons/daily_action.gif') no-repeat;
+}
+.icon-hang_up{
+	background:url('icons/tool_icons.gif') no-repeat 0px -96px;
+}
+.icon-help{
+	background:url('icons/help.gif') no-repeat;
+}
+.icon-host{
+	background:url('icons/host.gif') no-repeat;
+}
+.icon-host2{
+	background:url('icons/host2.gif') no-repeat;
+}
+.icon-identity_auth{
+	background:url('icons/identity_auth.gif') no-repeat;
+}
+.icon-log_clear{
+	background:url('icons/tool_icons.gif') no-repeat 0px -160px;
+}
+.icon-mem_set{
+	background:url('icons/mem_set.gif') no-repeat;
+}
+.icon-migrate_offline{
+	background:url('icons/icons.gif') no-repeat -32px -48px;
+}
+.icon-migrate_online{
+	background:url('icons/icons.gif') no-repeat -48px -48px;
+}
+.icon-open_timing{
+	background:url('icons/open_timing.gif') no-repeat;
+}
+.icon-platform_config{
+	background:url('icons/platform_config.gif') no-repeat;
+}
+.icon-platform_info{
+	background:url('icons/platform_info.gif') no-repeat;
+}
+.icon-platform_set{
+	background:url('icons/icons.gif') no-repeat -16px -48px;
+}
+.icon-publish{
+	background:url('icons/publish.gif') no-repeat;
+}
+.icon-print{
+	background:url('icons/print.gif') no-repeat;
+}
+
+.icon-quota_adjust{
+	background:url('icons/icons.gif') no-repeat -16px 0px;
+}
+.icon-reboot{
+	background:url('icons/tool_icons.gif') no-repeat 0px -48px;
+}
+.icon-rebuild{
+	background:url('icons/tool_icons.gif') no-repeat 0px -16px;
+}
+.icon-refresh{
+	background:url('icons/refresh.gif') no-repeat;
+}
+.icon-register{
+	background:url('icons/register.gif') no-repeat;
+}
+.icon-resource_management{
+	background:url('icons/resource_management.gif') no-repeat;
+}
+.icon-encrypt_reset{
+	background:url('icons/encrypt_reset.gif') no-repeat;
+}
+.icon-encrypt_renew{
+	background:url('icons/tool_icons.gif') no-repeat 0px -256px;
+}
+.icon-save_as_template{
+	background:url('icons/icons.gif') no-repeat -64px -32px;
+}
+.icon-search{
+	background:url('icons/search.gif') no-repeat;
+}
+.icon-sec_events{
+	background:url('icons/sec_events.gif') no-repeat;
+}
+.icon-set_manager{
+	background:url('icons/set_manager.gif') no-repeat;
+}
+.icon-shut_timing{
+	background:url('icons/tool_icons.gif') no-repeat 0px -112px;
+}
+.icon-shutdown_force{
+	background:url('icons/tool_icons.gif') no-repeat 0px -128px;
+}
+.icon-shutdown_remote{
+	background:url('icons/shutdown_remote.gif') no-repeat;
+}
+.icon-shutdown{
+	background:url('icons/tool_icons.gif') no-repeat 0px -48px;
+}
+.icon-sleep{
+	background:url('icons/tool_icons.gif') no-repeat 0px -80px;
+}
+.icon-snapshot{
+	background:url('icons/icons.gif') no-repeat 0px -65px;
+}
+.icon-software_distribute{
+	background:url('icons/software_distribute.gif') no-repeat;
+}
+.icon-start_remote{
+	background:url('icons/tool_icons.gif') no-repeat 0px -336px;
+}
+.icon-start{
+	background:url('icons/tool_icons.gif') no-repeat 0px -272px;
+}
+.icon-starting{
+	background:url('icons/tool_icons.gif') no-repeat 0px -304px;
+}
+.icon-sum{
+	background:url('icons/sum.gif') no-repeat;
+}
+.icon-tip{
+	background:url('icons/tip.png') no-repeat;
+}
+.icon-unpublish{
+	background:url('icons/unpublish.gif') no-repeat;
+}
+.icon-usb_import{
+	background:url('icons/usb_import.gif') no-repeat;
+}
+.icon-usb_init{
+	background:url('icons/usb_init.gif') no-repeat;
+}
+.icon-vm_track{
+	background:url('icons/icons.gif') no-repeat -32px -65px;
+}
+.icon-vm{
+	background:url('icons/vm.gif') no-repeat;
+}
+.icon-vm2{
+	background:url('icons/vm2.gif') no-repeat;
+}
+.icon-certificate_import{
+	background:url('icons/icons.gif') no-repeat 0px -48px;
+}
+.icon-certificate_build{
+	background:url('icons/certificate_build.gif') no-repeat;
+}
+.icon-certificate_rebuild{
+	background:url('icons/certificate_rebuild.gif') no-repeat;
+}
+.icon-browser_check_set{
+	background:url('icons/tool_icons.gif') no-repeat 0px -192px;
+}
+.icon-ukey_set{
+	background:url('icons/tool_icons.gif') no-repeat 0px -176px;
+}
+
+/* ------------------------- 云存储图标 -----------------------------   */
+.icon-cluster_reg{
+	background:url('icons/storage/cluster_reg.png') no-repeat;
+}
+.icon-cluster_details{
+	background:url('icons/storage/cluster_details.png') no-repeat;
+}
+.icon-cluster_init{
+	background:url('icons/icons.gif') no-repeat -32px -16px;
+}
+.icon-server_disks{
+	background:url('icons/icons.gif') no-repeat 0px 0px;
+}
+.icon-volume_start{
+	background:url('icons/icons.gif') no-repeat -80px 0px;
+}
+.icon-volume_close{
+	background:url('icons/storage/volume_close.png') no-repeat;
+}
+.icon-volume_migrate{
+	background:url('icons/storage/volume_migrate.png') no-repeat;
+}
+.icon-volume_rebalence{
+	background:url('icons/storage/volume_rebalence.png') no-repeat;
+}
+.icon-volume_cifsconfig{
+	background:url('icons/icons.gif') no-repeat -48px -32px;
+}
+.icon-brick_add{
+	background:url('icons/icons.gif') no-repeat -32px -32px;
+}
+.icon-brick_delete{
+	background:url('icons/storage/brick_delete.png') no-repeat;
+}
+.icon-logs_view{
+	background:url('icons/icons.gif') no-repeat 0px -16px;
+}
+.icon-logs_download{
+	background:url('icons/icons.gif') no-repeat 0px -32px;
+}
+.icon-task_delete{
+	background:url('icons/storage/brick_delete.png') no-repeat;
+}
+

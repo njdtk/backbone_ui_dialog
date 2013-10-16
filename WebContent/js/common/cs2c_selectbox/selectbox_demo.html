@@ -1,0 +1,47 @@
+<!DOCTYPE html >
+
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+<div id="select_test" class="cs2c-selectbox"></div>
+
+</body>
+<script src="../lib/jquery.js"></script>
+<script src="../lib/underscore.js"></script>
+<script src="../lib/backbone.js"></script>
+<script src="cs2c_selectbox.js"></script>
+<script>
+$(function(){
+	new selectedBoxView({
+		'parentElId':'select_test',
+		'areaTitle':['左侧选择区','右侧选择区']
+	});
+	/*$('.select-body-item').mouseover(function(){
+		var tempthis = this;
+		$(this).find('.select-left-arrow').css('display','inline');
+		$(this).find('.select-right-arrow').css('display','inline');
+		$('.select-left-arrow,.select-right-arrow').unbind('click');
+		$('.select-left-arrow,.select-right-arrow').click(function(){
+			var thisClass = $(tempthis).children().eq(1).attr('class');
+			switch(thisClass){
+				case 'select-left-arrow':
+					$(tempthis).children().eq(1).removeClass('select-left-arrow').addClass('select-right-arrow').hide();
+					$('.select-right-content').append($(tempthis).clone(true));
+				break;
+				case 'select-right-arrow':
+					$(tempthis).children().eq(1).removeClass('select-right-arrow').addClass('select-left-arrow').hide();
+					$('.select-left-content').append($(tempthis).clone(true));
+				break;
+			default:break;
+			}
+			$(tempthis).remove();
+		});
+	}).mouseout(function(){
+		$(this).find('.select-left-arrow,.select-right-arrow').hide();
+	});*/
+});
+
+</script>
+</html>

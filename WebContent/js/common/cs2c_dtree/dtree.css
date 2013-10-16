@@ -1,0 +1,38 @@
+/*--------------------------------------------------|
+| cs2c_dtreeV0.1 | www.destroydrop.com/javascript/tree/ |
+|---------------------------------------------------|
+| Copyright (c) 2002-2003 Geir Landr�               |
+|--------------------------------------------------*/
+
+
+.selected {
+	background-color: #FBEC88;
+}
+
+.node_mouseover {
+	text-decoration: underline;
+	color: #0033FF;
+}
+
+.cs2c_rightMenu {
+	width:150px;
+	position:absolute;
+	z-index: 1000;
+	background:#fff;
+	overflow:hidden;
+	border-radius:4px;
+	box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.86);
+}
+
+.li_right_rline{
+	margin-left:20px;
+	line-height:25px;
+	cursor:pointer;
+	
+}
+
+.li_right_nline{
+	margin-left:15px;
+	line-height:10px;
+	
+}

@@ -1,0 +1,314 @@
+@CHARSET "UTF-8";
+
+.cs2c_dialog {
+	border-radius: 8px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	background: #ddd;
+	border: 1px solid #efefef;
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+	-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+	-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+	overflow: hidden;
+	padding: 0px 10px;
+	position: absolute;
+}
+
+.ui_left {
+	height: 100%;
+	width: 6px;
+	background: -moz-linear-gradient(left, #c9c9c9, #ddd);
+	background: -webkit-gradient(linear, 0 0, 100% 0, from(#c9c9c9),
+		to(#ddd));
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#c9c9c9,
+		endColorstr=#dddddd, gradientType=1);
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+.ui_right {
+	height: 100%;
+	width: 6px;
+	background: -moz-linear-gradient(left, #ddd, #c9c9c9);
+	background: -webkit-gradient(linear, 0 0, 100% 0, from(#ddd),
+		to(#c9c9c9));
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#dddddd,
+		endColorstr=#c9c9c9, gradientType=1);
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+
+.ui_top {
+	height: 6px;
+	width: 100%;
+	background: -moz-linear-gradient(top, #c9c9c9, #ddd);
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#c9c9c9),
+		to(#ddd));
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#c9c9c9,
+		endColorstr=#dddddd, gradientType=0)
+}
+
+.ui_bottom {
+	height: 6px;
+	width: 100%;
+	background: -moz-linear-gradient(top, #ddd, #c9c9c9);
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#ddd),
+		to(#c9c9c9));
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#dddddd,
+		endColorstr=#c9c9c9, gradientType=0)
+}
+
+.cs2c_dialog_header {
+	font: bold 14px/30px "宋体";
+	padding-left: 10px;
+	color: #000;
+	line-height: 40px;
+}
+
+.cs2c_dialog_header a {
+	position: absolute;
+	right: 8px;
+	top: 4px;
+	display: block;
+	height: 21px;
+	opacity: 0.6;
+	width:21px;
+}
+
+.cs2c_dialog_close_btn {
+	background: url("images/panel_tools.gif") no-repeat scroll -18px 5px
+		transparent;
+	cursor: pointer;
+}
+
+.cs2c_dialog_body {
+	padding:10px;
+	
+}
+
+.cs2c_dialog_button {
+	background: url("images/h2_line.png") 0 top repeat-x;
+	padding: 5px;
+	text-align: right;
+}
+
+.cs2c_wizard .cs2c_dialog_button {
+	height: 28px;
+}
+
+.cs2c_dialog_button a ,.cs2c_page_line_button a,.cs2c_page_button a{
+	margin:8px 10px;
+	color: #000;
+	border: 1px solid #999;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 12px;
+	height: 24px;
+	/* outline: medium none; */
+	text-decoration: none;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	background: -moz-linear-gradient(top, #ebebeb, #b9b9b9);
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#ebebeb),
+		to(#b9b9b9));
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ebebeb,
+		endColorstr=#b9b9b9, gradientType=0);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+	overflow:hidden;
+}
+
+a span.dialog-btn-left {
+	background: url("images/btn_bg.png") right bottom no-repeat;
+	display: inline-block;
+	height: 16px;
+	line-height: 16px;
+	padding: 4px 18px;
+	cursor: pointer;
+}
+
+a.l-btn {
+
+}
+
+.cs2c_dialog_shadow {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	opacity: 0.3;
+	filter: alpha(opacity = 30);
+	display: none;
+	z-index: 9995;
+}
+
+.dialog-mask {
+	position: absolute;
+	left: 0;
+	top: 0;
+	background: #ccc;
+	opacity: 0.3;
+	filter: alpha(opacity = 30);
+	display: none;
+}
+
+.dialog-mask-msg {
+	position: absolute;
+	cursor1: wait;
+	width: auto;
+	height: 16px;
+	padding: 12px 15px 10px 40px;
+	background: #fff url('images/pagination_loading.gif') no-repeat scroll
+		15px 10px;
+	 border: 1px solid #999; 
+	color: #222;
+	display: none;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	box-shadow:0 0 2px 0 rgba(0,0,0,0.36)
+}
+
+/* .cs2c_dialog_close_btn{
+background: url("images/panel_tools.gif") no-repeat scroll -16px 0 transparent;
+} */
+.cs2c_wizard_dialog_banner {
+	position: relative;
+	overflow:hidden;
+	background:url("images/wizard_2.gif") repeat-x;
+	margin: 5px;
+	border-right:1px solid #b1b1b1;
+	border-left:1px solid #b1b1b1;
+	border-radius:4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	
+}
+
+.cs2c_wizard_dialog_banner_span {
+	float:left;	
+}
+.cs2c_wizard_dialog_banner_span span{
+	display:block;
+	line-height:28px;
+	padding:0 25px 0 15px;
+	background:url("images/wizard_1.gif") right no-repeat;
+}
+.prevText span {	
+	background:url("images/wizard_5.gif") right no-repeat;
+}
+.redText {
+	background:url("images/wizard_4.gif") repeat-x;
+}
+.redText span {	
+	background:url("images/wizard_3.gif") right no-repeat;
+}
+
+.lastText span {	
+	background:none;
+}
+
+.cs2c_wizard_dialog_ctx {
+	padding: 10px;
+}
+
+.cs2c_show_tab {
+	color: blue;
+}
+
+.cs2c_tab {
+	overflow: hidden;
+	height: 100%;
+	background:-moz-linear-gradient(top, #fff, #e6e6e6);
+	border: 1px solid #999;
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+	-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+	-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+	-moz-border-radius: 0 0 8px 8px;
+	-webkit-border-radius: 0 0 8px 8px;
+	border-radius: 0 0 8px 8px;
+}
+.cs2c_dialog .cs2c_tab{
+	background:none;
+	border: 0;
+	box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	-moz-border-radius: none;
+}
+.cs2c_tab_btn {
+	-moz-border-radius: 4px 4px 0 0;
+	-webkit-border-radius: 4px 4px 0 0;
+	border-radius: 4px 4px 0 0;
+	background: -moz-linear-gradient(top, #ebebeb, #d8d8d8);
+color: #000;
+	display: inline-block;
+	height: 20px;
+	line-height: 20px;
+	margin: 0 2px 0 2px;
+	padding: 5px 20px 0 20px;
+	text-align: center;
+	text-decoration: none;
+	white-space: nowrap;
+	border: 1px solid #c3c3c3;
+	border-bottom: none;
+	cursor: pointer;
+}
+
+.cs2c_tab_title {
+	background: -moz-linear-gradient(top, #eeeeee, #d8d8d8);	
+	border-bottom: 3px solid #9a9a9a;
+	height: 26px;
+	padding: 5px 0 0 8px;
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+	-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+	-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+.cs2c_dialog .cs2c_tab_title{
+	background:none;
+	
+}
+/*.cs2c_tab_btn:hover {
+	background: -moz-linear-gradient(top, #eeeeee, #9a9a9a);
+	font-weight:bold;
+}
+*/
+.cs2c_tabs_selected {
+	background: -moz-linear-gradient(top, #eeeeee, #9a9a9a);
+	
+	border: #9a9a9a solid 1px;
+	font-weight:bold;
+}
+
+.cs2c_tab_ctx {		
+	height: auto;
+	overflow: auto;
+	padding: 10px;
+}
+/* 信息提示框的样式 */
+.cs2c_message {
+	position: absolute;
+	padding: 10px;
+	border: 1px solid #FFC040;
+	overflow: hidden;
+	max-width: 500px;
+	width: 300px;
+	min-height: 20px;
+	line-height: 20px;
+	background-color: #FFFEA8;
+	text-align: center;
+	display: none;
+	top: 100px;
+}

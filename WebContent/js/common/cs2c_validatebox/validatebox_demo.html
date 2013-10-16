@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<style>
+				p,div{
+					padding:0;
+					margin:0;
+				}
+				li {
+					list-style:none outside none;
+					width:500px;
+					float:left;
+				}
+				.validate_tip {
+					position:absolute;
+					border:1px solid #ccc;
+					padding:5px;
+					margin-left:7px;
+					z-index:1000;
+					background:white;
+					max-width:200px;
+					word-break:keep-all;
+					word-wrap:break-word;
+					display:none;
+				}
+				.validate_tip_arrow_border{
+					border-color: transparent black;
+					border-style: solid;
+					border-width: 6px 6px 6px 0;
+					position: absolute;
+					height:0;
+					width: 0;
+					top:2px;
+					left:-5px;
+				}
+				.validate_tip_arrow{
+					border-color: transparent white;
+					border-style: solid;
+					border-width: 6px 6px 6px 0;
+					position: absolute;
+					top:2px;
+					left:-5px;
+				}
+				/*.validate_tip:before {
+					border-color: transparent white;
+					border-style: solid;
+					border-width: 7px 7px 7px 0;
+					content: "";
+					display: block;
+					left: -7px;
+					position: absolute;
+					top: 5px;
+					width: 0;
+				}*/
+		</style>
+	</head>
+	<body>
+		<div>
+		
+		<div style="height:500px">asdjf</div>
+		<div style="height:500px">asdjf</div>
+		<div style="height:500px">asdjf</div>
+		<ul>
+			<li>
+				test
+			</li>
+			<li>
+				<input id="searchword1" class="cs2c_searchbox" style="width: 149px" ><!-- 用户自己定义的 -->
+			</li>
+			<li>
+				<span>测试：</span><input id="validatebox" class="cs2c_validatebox" required><input>
+				<!--<span class="validate_tip">
+					<p>请勿输入除英文字母（不区分大小写）、下划线、数字和汉字之外的字符，字符个数不小于2且不大于20。</p>
+					<span class="validate_tip_arrow_border"></span>
+					<span class="validate_tip_arrow"></span>
+				</span>-->
+			</li>	
+			<li><button>点击</button></li>	
+		</ul>
+		<div style="height:500px">asdjf</div>
+	</div>
+	
+		
+		
+	</body>
+	<script src="../lib/jquery.js"></script>
+	<script src="../lib/underscore.js"></script>
+	<script src="../lib/backbone.js"></script>
+	<script src="validatebox.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			testview = Backbone.View.extend({
+				el : $('body'),
+				initialize : function() {
+				_.bindAll(this,'render');
+				this.render();
+			},
+			render : function() {//tip的页面元素
+				this.testdemo = new validateBoxView({
+							'id':'validatebox',
+							'tipmsg':'请勿输入除英文字母',
+							'reqmsg':'必填项',
+							'reg_exp':/^[1-9]d*$/
+							});
+				/*this.testdemo.validateFunc = function(){
+					if($('#validatebox').val() ==="abc"){
+						return true;
+					}else{
+						return false;
+					}
+				}*/
+			}
+			});
+			
+			var start = new testview();
+			$('button').click(function(){
+				start.testdemo.inputValidate();
+			});
+		});
+	</script>
+</html>

@@ -1,0 +1,63 @@
+* { padding:0; cursor:default }
+.date_title { height:22px; background:-moz-linear-gradient(top, #ececec, #bfbfbf); color:#666; line-height:22px ;}
+.date_title div { float:left }
+.date_title div, img:hover { cursor:pointer; }
+.cs2c_date_picker { height:230px; width:180px; background:#fff; position:absolute; z-index:10000; display:none; border: 1px solid #999999; padding:1px;}
+.date_table_title { background:#fafafa;border:1px solid #eee;border-bottom:0 }
+.date_table_content { padding-top:5px;border:1px solid #eee;border-top:0 }
+td { width:31px; text-align:center; border:1px solid rgba(0,0,0,0); }
+.date_table_content .calendar_item:hover, .date_selected, .mouth_selected,.date_mouth_body td:hover { cursor:pointer;background:#FBEC88; border: 1px solid red; color:#0099e4 }
+.date_selected, .mouth_selected { color:black }
+.date_button { position:absolute; bottom:10px; left:7px }
+.date_button button, .date_title_content span { cursor:pointer }
+.date_today, .mouth_current { color:#0099e4;font-weight:bold }
+.date_move_left { margin:5px 10px 0 10px;background:url(images/left_arrow.png) no-repeat;height:9px;width:9px }
+.date_move_right { margin:5px 10px 0 10px;background:url(images/right_arrow.png) no-repeat;height:9px;width:9px }
+.date_mouth_body td { width:40px; height:40px; text-align:center; }
+.date_title_content { position:relative; text-align:center; width:120px; cursor:pointer }
+.cs2c_data_icon{
+	background:url('images/dateicon.png') no-repeat;
+	height:16px;
+	width:16px;
+}
+.spinner{
+	display:inline-block;
+	white-space:nowrap;
+	font-size:12px;
+	margin:5px 0 0;
+	padding:0;
+	border:1px solid #A4BED4;
+}
+.spinner-text{
+	width:100px;
+	font-size:12px;
+	border:0px;
+	line-height:20px;
+	height:20px;
+	padding:0px;
+	*height:18px;
+	*line-height:18px;
+	_height:18px;
+	_line-height:18px;
+}
+.spinner-arrow{
+	display:inline-block;
+	vertical-align:top;
+	margin:0;
+	padding:0;
+}
+.spinner-arrow-up,.spinner-arrow-down{
+	display:block;
+	background:#E0ECF9 url('images/spinner_arrow_up.gif') no-repeat 5px 2px;
+	font-size:1px;
+	width:18px;
+	height:10px;
+}
+.spinner-arrow-down{
+	background:#E0ECF9 url('images/spinner_arrow_down.gif') no-repeat 5px 3px;
+}
+.spinner-arrow-hover{
+	background-color:#ECF9F9;
+}
+
+.spinner input:visited,.spinner input:active,.spinner input:focus{border:0;} 
